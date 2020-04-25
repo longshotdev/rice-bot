@@ -17,12 +17,12 @@ module.exports = class extends Command {
   constructor() {
     super({
       name: "true",
-      enable: true,
+      enable: false,
       cooldown: 0,
       runIn: ["text"],
       permLevel: 0,
       usage: "",
-      description: "yes yes yes :)",
+      description: "bruh",
       aliases: [],
     });
   }

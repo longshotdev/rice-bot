@@ -33,16 +33,6 @@ class RichEmbed {
     if (pagination === true && (pages?.length == 0 || pages === undefined)) {
       throw new Error("No pages found. Did you forget to add Pages?");
     }
-    /**
-     * Default embed pagination
-     */
-    this.embed.setFooter(
-      `Page: ${this.onPage + 1}/${
-        typeof this.pages?.length == "number"
-          ? this.pages?.length + 1
-          : this.pages?.length
-      }`
-    );
   }
 
   get getEmbed(): MessageEmbed {
@@ -51,9 +41,14 @@ class RichEmbed {
   get getSentEmbed(): Message {
     return this.sentEmbed;
   }
+  /**
+   * Sends the Embed
+   * @param message Original Message Object passed from command.
+   * @returns New Message Object (Attach Events with .then() or async/await)
+   */
   public async sendEmbed(message: Message): Promise<Message> {
     const sentEmbed = await message.channel
-      .send(this.embed)
+      .send(this.setEmbed(this.pages![0]))
       .then((msg) => (this.sentEmbed = msg));
 
     if (this.isPageinated) {
@@ -62,8 +57,8 @@ class RichEmbed {
       this.reactionFilter = this.sentEmbed.createReactionCollector(
         this.embedFilter,
         {
-          time: 15000,
-          maxEmojis: 2,
+          time: 30000,
+          maxEmojis: 80,
         }
       );
     }
@@ -77,36 +72,54 @@ class RichEmbed {
   }
 
   private handleReactions(reaction: MessageReaction) {
+    if (this.pages!.length === 0) return;
     if (reaction.emoji.name == "◀") {
       if (this.onPage != 0) {
         this.onPage--;
         this.changePage(reaction);
       }
     } else if (reaction.emoji.name == "▶") {
-      // @ts-ignore
-      if (this.onPage === 0 || this.onPage - 1 > this.pages?.length) {
+      if (
+        (this.onPage === 0 && this.pages!.length > 1) ||
+        this.onPage < this.pages!.length - 1
+      ) {
         this.onPage++;
         this.changePage(reaction);
       }
+    } else {
     }
   }
   private changePage(reaction: MessageReaction) {
-    const currentPage = this.pages?.[this.onPage - 1];
+    const currentPage = this.pages![this.onPage];
+    reaction.message.edit(this.setEmbed(currentPage));
+  }
+
+  private setEmbed(info: IPageMessageEmbed): MessageEmbed {
     const tempEmbed = new MessageEmbed();
-    tempEmbed.setAuthor(currentPage?.author); // TODO: change this;
-    //tempEmbed.setColor(currentPage?.color);
-    tempEmbed.setDescription(currentPage?.description);
+    if (info.author)
+      tempEmbed.setAuthor(
+        info.author.name,
+        info.author.iconURL,
+        info.author.url
+      );
+    if (info.color) tempEmbed.setColor(info.color);
+    if (info.description) tempEmbed.setDescription(info.description);
+    if (info.fields) {
+      info.fields.forEach((field) => {
+        tempEmbed.addField(field.name, field.value, field.inline);
+      });
+    }
+    if (info.image) tempEmbed.setImage(info.image.url);
+    if (info.thumbnail) tempEmbed.setThumbnail(info.thumbnail.url);
+    if (info.title) tempEmbed.setTitle(info.title);
     tempEmbed.setFooter(
       `Page: ${this.onPage + 1}/${
         typeof this.pages?.length == "number"
-          ? this.pages?.length + 1
+          ? this.pages?.length
           : this.pages?.length
       }`
     );
-    currentPage?.fields?.map((field) => {
-      tempEmbed.addField(field.name, field.value, field.inline);
-    });
-    reaction.message.edit(tempEmbed);
+    return tempEmbed;
   }
   private embedFilter(reaction: MessageReaction, user: User): boolean {
     return (

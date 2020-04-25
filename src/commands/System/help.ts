@@ -1,7 +1,6 @@
 import Command from "../../core/Command";
 import { Message } from "discord.js";
 import Rice from "../../Rice";
-import CommandStore from "../../core/CommandStore";
 
 /*
  * File: help.ts
@@ -28,8 +27,8 @@ class Help extends Command {
       usageDelimiter: "????",
     });
   }
-  async run(message: Message, [..._args], _client: Rice): Promise<Message> {
-    const help: any = await this.buildHelp();
+  async run(message: Message, [..._args], client: Rice): Promise<Message> {
+    const help: any = await this.buildHelp(client);
     const categories = Object.keys(help);
     const helpMessage = [];
     for (let cat = 0; cat < categories.length; cat++) {
@@ -40,15 +39,15 @@ class Help extends Command {
 
     return message.channel.send(helpMessage, { split: { char: "\u200b" } });
   }
-  async buildHelp() {
+  async buildHelp(client: Rice) {
     const help: any = {};
-    const commandNames = Array.from(CommandStore.store.keys());
+    const commandNames = Array.from(client.CommandStore.store.keys());
     const longest = commandNames.reduce(
       (long, str) => Math.max(long, str.length),
       0
     );
     await Promise.all(
-      CommandStore.store.map((command) => {
+      client.CommandStore.store.map((command) => {
         if (!help.hasOwnProperty(command.category)) help[command.category] = [];
         help[command.category].push(
           `+${command.name.padEnd(longest)} :: ${command.description}`

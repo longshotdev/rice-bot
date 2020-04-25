@@ -1,5 +1,6 @@
 import { Collection } from "discord.js";
 import Command from "./Command";
+import Store from "./Store";
 
 /*
  * File: CommandStore.ts
@@ -14,34 +15,22 @@ import Command from "./Command";
  */
 
 // Simple Key Value Store
-class CommandStore {
-  public static store = new Collection<string, Command>();
-  public static storeAlias = new Collection<string, Command>();
+class CommandStore extends Store<string, Command> {
+  public store: Collection<string, Command> = super.getStore;
+  public storeAlias = new Collection<string, Command>();
 
-  public static set(
-    key: string,
-    command: Command
-  ): Collection<string, Command> {
-    this.store.set(key, command);
-    return this.store;
+  constructor() {
+    super();
   }
 
-  public static delete(key: string): Collection<string, Command> {
-    this.store.delete(key);
-    return this.store;
-  }
-
-  public static setAlias(
-    key: string,
-    command: Command
-  ): Collection<string, Command> {
+  public setAlias(key: string, command: Command): Collection<string, Command> {
     this.storeAlias.set(key, command);
-    return this.store;
+    return this.storeAlias;
   }
 
-  public static deleteAlias(key: string): Collection<string, Command> {
+  public deleteAlias(key: string): Collection<string, Command> {
     this.storeAlias.delete(key);
-    return this.store;
+    return this.storeAlias;
   }
 }
 export default CommandStore;

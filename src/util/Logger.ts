@@ -22,11 +22,13 @@ export default class {
   public static levels = levels;
 
   public static log(text: string, type: levels): void {
-    console.log(
-      `${chalk.black.bgYellow(`[${moment().format("LTS")}]`)} [${this.getType(
-        type
-      )}]: ${text}`
-    );
+    process.env.NODE_ENV !== "test"
+      ? console.log(
+          `${chalk.black.bgYellow(
+            `[${moment().format("LTS")}]`
+          )} [${this.getType(type)}]: ${text}`
+        )
+      : null;
   }
   public static getType(type: levels): string {
     switch (type) {

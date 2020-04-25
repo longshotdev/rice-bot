@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    [
+      "dynamic-import-node",
+      {
+        "noInterop": true
+      }
+    ],
+    "@babel/preset-typescript"
+  ]
+}

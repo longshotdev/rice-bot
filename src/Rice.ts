@@ -10,7 +10,6 @@
  * Copyright 2020 - 2020 Longshot Development, Longshot Development
  */
 import { Client } from "discord.js";
-//import Enmap from "enmap";
 import chalk from "chalk";
 import Logger from "./util/Logger";
 import Command from "./core/Command";
@@ -18,54 +17,73 @@ import MonitorStore from "./core/MonitorStore";
 import CommandMonitor from "./Monitors/CommandMonitor";
 import CommandStore from "./core/CommandStore";
 import mongoose from "mongoose";
-const fsn = require("fs-nextra");
-
+import EventStore from "./core/EventStore";
+import * as fsn from "fs-nextra";
+import Event from "./core/Event";
 class Rice extends Client {
-  public MonitorStore: MonitorStore;
+  public MonitorStore: MonitorStore = new MonitorStore(this);
+  public CommandStore: CommandStore = new CommandStore();
+  public EventStore: EventStore = new EventStore(this);
   public constructor() {
     super();
-
     // Enmap
-    this.MonitorStore = new MonitorStore(this);
     // Events
-    this.on("ready", () => this._eventReady());
+    this.on("ready", () =>
+      this.EventStore.getStore.get("ready")!.run(this, [])
+    );
     this.on("error", (error) => console.log(error));
     // this.on("raw", (data) => Logger.info(data));
-    this.on("message", (msg) => this.MonitorStore.run(msg));
-    this.on("guildCreate", (guild) => this.MonitorStore.runGuild(guild));
+    this.on("message", (msg) =>
+      this.EventStore.getStore.get("message")!.run(this, [msg])
+    );
+    this.on("guildCreate", (guild) =>
+      this.EventStore.get("guildCreate")!.run(this, [guild])
+    );
+    this.on("guildDelete", (guild) =>
+      this.EventStore.get("guildDelete")!.run(this, [guild])
+    );
     this.on("warn", (warn) => console.log(warn));
 
-    mongoose
-      .connect(
-        "mongodb+srv://admin:uPHvx1Fri6aWu9lz@rice-bot-g0slf.mongodb.net/Discord?retryWrites=true&w=majority",
-        { useUnifiedTopology: true, useNewUrlParser: true }
-      )
-      .then(
-        () => {
-          Logger.log("Logged into Mongo!", Logger.levels.INFO);
-        },
-        (err) => {
-          throw err;
-        }
-      );
     // Setup Commands
     // This is done initally and will be cached into ram
     // Process: Read ./commands -> Read Each Folder -> Read Each Command File
     // TODO: Make this a param
-    this._registerCommands();
-    this._registerMonitors();
   }
-  private _eventReady(): void {
+  public async run(): Promise<void> {
+    await this.registerEvents();
+    await this.registerCommands();
+    await this.registerMonitors();
+    await this.connectToMongo();
+  }
+  public async connectToMongo(): Promise<void> {
+    mongoose
+      // @ts-ignore
+      .connect(process.env.MONGO_URL, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+      })
+      .then(
+        () => {
+          Logger.log("Logged into Mongo!", Logger.levels.INFO);
+        },
+        (err: any) => {
+          throw err;
+        }
+      );
+  }
+  public async registerEvents(): Promise<void> {
+    const events = await fsn.readdir(`${__dirname}/events`);
+    events.forEach(async (event) => {
+      const evt: Event = new (require(`${__dirname}/events/${event}`))();
+      this.EventStore.register(evt);
+    });
+
     Logger.log(
-      `Rice Farming in ${chalk.yellow.bold(this.guilds.cache.size)} servers!`,
+      `Loaded ${chalk.green.bold(events.length)} events.`,
       Logger.levels.INFO
     );
-    this.user?.setActivity({
-      name: `${this.guilds.cache.size} Rice Fields`,
-      type: "WATCHING",
-    });
   }
-  private async _registerCommands(): Promise<void> {
+  public async registerCommands(): Promise<void> {
     const categories = (await fsn.readdir(`${__dirname}/commands`)).filter(
       (folderName: string) => !(folderName.indexOf(".") !== -1)
     );
@@ -74,7 +92,7 @@ class Rice extends Client {
       const commands = await fsn.readdir(`${__dirname}/commands/${category}`);
       commands.map(async (cmd: string) => {
         const command: Command = new (require(`${__dirname}/commands/${category}/${cmd}`))();
-        CommandStore.set(
+        this.CommandStore.set(
           command.name.toLowerCase(),
           Object.defineProperty(command, "category", {
             value: category,
@@ -82,23 +100,24 @@ class Rice extends Client {
           })
         );
         command.aliases.forEach((alias: string) => {
-          CommandStore.setAlias(alias.toLowerCase(), command);
+          this.CommandStore.setAlias(alias.toLowerCase(), command);
         });
       });
     });
     Promise.all(bruh).then(() => {
       Logger.log(
-        `Loaded ${chalk.green.bold(CommandStore.store.size)} commands.`,
+        `Loaded ${chalk.green.bold(this.CommandStore.size)} commands.`,
         Logger.levels.INFO
       );
     });
   }
-  private _registerMonitors() {
+  public async registerMonitors(): Promise<void> {
     this.MonitorStore.register(new CommandMonitor());
     Logger.log(
       `Loaded ${chalk.green.bold(this.MonitorStore.size)} monitors.`,
       Logger.levels.INFO
     );
+    return;
   }
   public login(token: string): Promise<string> {
     return super.login(token);

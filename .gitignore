@@ -4,3 +4,18 @@ node_modules/
 
 # Yarn
 yarn-error.log
+
+# ENV
+.env.dev
+.env.production
+.env.test
+
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# TypeScript cache
+*.tsbuildinfo

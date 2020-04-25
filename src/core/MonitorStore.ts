@@ -10,15 +10,12 @@
  * Copyright 2020 - 2020 Longshot Development, Longshot Development
  */
 
-/**
- * This class handles all the monitors and registers all events/monitors
- *
- */
-import Discord, { Guild } from "discord.js";
 import Monitor from "./Monitor";
-import GuildJoinMonitor from "../Monitors/GuildJoinMonitor";
-
-class MonitorStore extends Discord.Collection<string, Monitor> {
+import Store from "./Store";
+/**
+ * This class handles all the monitors which are functions that only execute on `Discord.Client#onMessage`
+ */
+class MonitorStore extends Store<string, Monitor> {
   protected client: any;
 
   constructor(client: any) {
@@ -27,7 +24,7 @@ class MonitorStore extends Discord.Collection<string, Monitor> {
     this.client = client;
   }
   run(msg: any) {
-    for (const monit of this.values()) {
+    for (const monit of super.getStore.values()) {
       if (
         monit.enabled &&
         !(monit.ignoreBots && msg.author.bot) &&
@@ -38,11 +35,8 @@ class MonitorStore extends Discord.Collection<string, Monitor> {
       }
     }
   }
-  runGuild(guild: Guild) {
-    new GuildJoinMonitor().run(guild, this.client);
-  }
   public register(monitor: Monitor): void {
-    const exists = this.get(monitor.name);
+    const exists = this.exist(monitor.name);
 
     if (exists) this.delete(monitor.name);
     else super.set(monitor.name, monitor);

@@ -20,10 +20,23 @@ import mongoose from "mongoose";
 import EventStore from "./core/EventStore";
 import * as fsn from "fs-nextra";
 import Event from "./core/Event";
+import MusicStore from "./core/MusicStore";
+import InhibitorStore from "./core/InhibitorStore";
+/**
+ * My Ideas Upcoming After #3 Commit.
+ *
+ * Fuck all the methods in this class.
+ * just do everything in the constructor.
+ *
+ *
+ */
 class Rice extends Client {
   public MonitorStore: MonitorStore = new MonitorStore(this);
   public CommandStore: CommandStore = new CommandStore();
   public EventStore: EventStore = new EventStore(this);
+  public MusicStore: MusicStore = new MusicStore();
+  public InhibitorStore: InhibitorStore = new InhibitorStore();
+
   public constructor() {
     super();
     // Enmap
@@ -42,6 +55,9 @@ class Rice extends Client {
     this.on("guildDelete", (guild) =>
       this.EventStore.get("guildDelete")!.run(this, [guild])
     );
+    this.on("guildMemberAdd", (guildMember) =>
+      this.EventStore.get("guildMemberAdd")!.run(this, [guildMember])
+    );
     this.on("warn", (warn) => console.log(warn));
 
     // Setup Commands
@@ -57,8 +73,7 @@ class Rice extends Client {
   }
   public async connectToMongo(): Promise<void> {
     mongoose
-      // @ts-ignore
-      .connect(process.env.MONGO_URL, {
+      .connect(<string>process.env.MONGO_URL, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
       })
@@ -124,9 +139,12 @@ class Rice extends Client {
   }
 }
 export default Rice;
-// process.on("uncaughtException", (error?: Error) => {
-//   const errorMsg = error.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
-//   console.log("Uncaught Exception: " + errorMsg);
-//   console.log(error);
-//   process.exit(1);
-// });
+process.on("uncaughtException", (error?: Error) => {
+  const errorMsg = error!.stack!.replace(
+    new RegExp(`${__dirname}/`, "g"),
+    "./"
+  );
+  console.log("Uncaught Exception: " + errorMsg);
+  console.log(error);
+  process.exit(1);
+});

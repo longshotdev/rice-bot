@@ -4,3 +4,4 @@ declare namespace NodeJS {
     MONGO_URL: string;
   }
 }
+declare module "simple-youtube-api";

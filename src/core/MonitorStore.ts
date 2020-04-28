@@ -12,6 +12,7 @@
 
 import Monitor from "./Monitor";
 import Store from "./Store";
+import { Message } from "discord.js";
 /**
  * This class handles all the monitors which are functions that only execute on `Discord.Client#onMessage`
  */
@@ -23,7 +24,7 @@ class MonitorStore extends Store<string, Monitor> {
     super();
     this.client = client;
   }
-  run(msg: any) {
+  run(msg: Message) {
     for (const monit of super.getStore.values()) {
       if (
         monit.enabled &&
@@ -31,7 +32,11 @@ class MonitorStore extends Store<string, Monitor> {
         !(monit.ignoreSelf && this.client.user === msg.author) &&
         !(monit.ignoreOthers && this.client.user !== msg.author)
       ) {
-        monit.run(msg, this.client);
+        monit.run(msg, this.client).catch((Exception: Error) => {
+          msg.channel.send(
+            `There was an error executing your command. \n \`\`\`${Exception.message}\`\`\``
+          );
+        });
       }
     }
   }

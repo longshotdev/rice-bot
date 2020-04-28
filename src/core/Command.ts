@@ -51,7 +51,11 @@ class Command {
     this.usageDelimiter = usageDelimiter;
   }
 
-  public run(_message: Message, [..._args], _client: Rice): void {}
+  public async run(
+    _message: Message,
+    [..._args],
+    _client: Rice
+  ): Promise<Message | void> {}
   get getRunIn() {
     return this.runIn;
   }

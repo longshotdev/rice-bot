@@ -32,6 +32,7 @@ class guildCreate extends Event {
           logChannel: "ASF",
           nsfw: false,
           xp: true,
+          EventJoin: false,
         },
       })
         .then(() => {

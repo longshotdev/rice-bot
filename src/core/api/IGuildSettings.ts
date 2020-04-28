@@ -17,6 +17,8 @@ interface IConfig {
   nsfw: boolean;
   disabledCommands?: Array<Snowflake>;
   logChannel: Snowflake;
+  EventJoin: boolean;
+  joinRole?: string;
 }
 export interface IGuildSettings {
   id: Snowflake;
@@ -25,7 +27,13 @@ export interface IGuildSettings {
   BotJoinDate: Date;
   config: IConfig;
 }
-
+export enum EConfigActions {
+  set,
+  get,
+  reset,
+  list,
+  remove,
+}
 const GuildSettingsSchema = new Schema({
   id: { type: String, required: true, unique: true },
   owner: { type: String, required: true },
@@ -36,7 +44,9 @@ const GuildSettingsSchema = new Schema({
     xp: { type: Boolean, required: true },
     nsfw: { type: Boolean, required: true },
     disabledCommands: { type: Array, required: true },
+    EventJoin: { type: Boolean, required: true },
     logChannel: { type: String, required: true },
+    joinRole: { type: String, required: false },
   },
 });
 export default mongoose.model("GuildSettings", GuildSettingsSchema);

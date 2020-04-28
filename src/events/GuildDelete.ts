@@ -13,10 +13,14 @@ import Rice from "../Rice";
 import GSController from "../core/api/GuildSettings.controller";
 import Logger from "../util/Logger";
 import Event from "../core/Event";
+import { Guild } from "discord.js";
 
 module.exports = class GuildDeleteMonitor extends Event {
-  public async run(_client: Rice, [guild, ..._args]: any): Promise<void> {
-    if (guild && (await GSController.doesGuildExist(guild.id))) {
+  constructor() {
+    super("guildDelete", true);
+  }
+  public async run(_client: Rice, [guild, ..._args]: Guild[]): Promise<void> {
+    if (await GSController.doesGuildExist(guild.id)) {
       GSController.removeGuild(guild.id)
         .then(() => {
           Logger.log(`Left Guild: ${guild.name}`, Logger.levels.INFO);

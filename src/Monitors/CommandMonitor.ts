@@ -36,9 +36,8 @@ class CommandMonitor extends Monitor {
     const GS = await GSController.ensureGuild(msg.guild);
     let prefix: string | undefined;
     // i dont know how resource intensive this shit is but ye better than regex 🙃
-    for (const thisPrefix of GS.config.prefix) {
-      if (msg.content.startsWith(<string>thisPrefix))
-        prefix = <string>thisPrefix;
+    for (const thisPrefix of <string[]>GS.config.prefix) {
+      if (msg.content.startsWith(thisPrefix)) prefix = thisPrefix;
     }
 
     if (!prefix) return;
@@ -49,11 +48,10 @@ class CommandMonitor extends Monitor {
     args.reverse();
     // HACK: Change this shit asap
     const cmd =
-      client.CommandStore.get(command[0].toLowerCase()) ||
-      client.CommandStore.storeAlias.get(command[0].toLowerCase());
+      client.CommandStore.storeAlias.get(command[0].toLowerCase()) ||
+      client.CommandStore.get(command[0].toLowerCase());
     if (!cmd) return;
     const bruh = checkArgs(msg, cmd, args);
-    console.log(cmd.usage.length);
     if (isEmpty(bruh) && cmd.usage.length >= 1) return;
     /**
      * <> | required argument
@@ -75,7 +73,11 @@ class CommandMonitor extends Monitor {
       return;
     }
     if (!cmd.runIn.includes(msg.channel.type)) return;
-    cmd.run(msg, [bruh], client);
+    cmd.run(msg, [bruh], client).catch((e: Error) => {
+      msg.channel.send(
+        `There was an error executing your command. \n \`\`\`${e.message}\`\`\``
+      );
+    });
     return;
   }
 }

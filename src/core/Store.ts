@@ -27,8 +27,9 @@ class Store<Key, Value> {
     return this.store;
   }
   public get(key: Key): Value | undefined {
-    if (this.store.get(key) === undefined)
-      throw new Error(`${key} is not found in store.`);
+    // TODO: Fix this to where the command Monitor doesnt throw an error if theres no command named it.
+    // if (this.store.get(key) === undefined)
+    //   throw new Error(`${key} is not found in store.`);
     return this.store.get(key);
   }
   public exist(key: Key): boolean {

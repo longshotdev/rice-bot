@@ -1,6 +1,7 @@
 import Command from "../../core/Command";
 import { Message } from "discord.js";
-
+import GSController from "../../core/api/GuildSettings.controller";
+//import { IGuildSettings } from "../../core/api/IGuildSettings";
 /*
  * File: config.ts
  * Project: ricebot
@@ -17,7 +18,7 @@ module.exports = class extends Command {
     super({
       name: "config",
       enable: true,
-      aliases: [""],
+      aliases: ["conf", "cfg"],
       cooldown: 0,
       permLevel: 6,
       runIn: ["text"],
@@ -25,8 +26,35 @@ module.exports = class extends Command {
       usageDelimiter: " ",
     });
   }
-  async run(msg: Message, [{ ...required }]): Promise<void> {
-    msg.channel.send("im alive");
-    console.log(required);
+  async run(msg: Message, [{ ...args }]): Promise<Message> {
+    const { required, key, value } = args;
+    GSController.testo(msg.guild!.id).then(() => {
+      console.log("did iut");
+    });
+    if (!key || !value) return msg.channel.send("No Key / Value Input.");
+
+    switch (key) {
+      case "prefix":
+        // GSController.changeConfig(msg.guild!, required, key, value)
+        //   .then((cfg: IGuildSettings) => {
+        //     msg.channel.send(`Changed prefix to: ${cfg.config.prefix}`);
+        //   })
+        //   .catch((e) => {
+        //     console.log(e);
+        //   });
+
+        break;
+      case "xp":
+        break;
+      case "nsfw":
+        break;
+      case "joinRole":
+        break;
+      case "EventJoin":
+        break;
+      default:
+        return msg.channel.send("wtf");
+    }
+    return msg.channel.send(`${required}-${key}-${value}`);
   }
 };

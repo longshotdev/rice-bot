@@ -31,6 +31,6 @@ class Monitor {
     this.ignoreOthers = ignoreOthers;
     this.ignoreSelf = ignoreSelf;
   }
-  public run(_msg: Message, _client: Rice): void {}
+  public async run(_msg: Message, _client: Rice): Promise<Message | void> {}
 }
 export default Monitor;

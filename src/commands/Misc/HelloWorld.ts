@@ -13,11 +13,12 @@
 import { Message } from "discord.js";
 import Command from "../../core/Command";
 import Rice from "../../Rice";
+import playMusic from "../../util/Music/playMusic";
 module.exports = class extends Command {
   constructor() {
     super({
       name: "true",
-      enable: false,
+      enable: true,
       cooldown: 0,
       runIn: ["text"],
       permLevel: 0,
@@ -27,6 +28,6 @@ module.exports = class extends Command {
     });
   }
   public async run(msg: Message, [..._args], _client: Rice): Promise<void> {
-    msg.channel.send(`Hello World ${_args.map((c) => c)}`);
+    playMusic(_client, msg);
   }
 };

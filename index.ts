@@ -16,4 +16,4 @@ switch (process.env.NODE_ENV) {
 dotenv.config({ path: path });
 const Bot = new Rice();
 Bot.login(process.env.DISCORD_TOKEN!);
-Bot.run();
+Bot;

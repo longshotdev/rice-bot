@@ -13,6 +13,7 @@ class CommandRegistry {
   private async init(): Promise<void> {
     this.registerModule(Commands.fun, "Fun");
     this.registerModule(Commands.moderation, "Moderation");
+    this.registerModule(Commands.system, "System");
   }
   public registerModule(module: Object, moduleName: string) {
     for (let [, command] of Object.entries(module)) {

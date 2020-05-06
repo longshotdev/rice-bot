@@ -10,7 +10,7 @@ class EventRegistry {
     this.init();
   }
   private init(): void {
-    this.registerAll(new Events.message());
+    this.registerAll(new Events.message(), new Events.ready());
   }
   public registerAll(...events: Event[]) {
     events.forEach((event) => {

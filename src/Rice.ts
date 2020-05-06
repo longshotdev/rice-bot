@@ -1,9 +1,12 @@
 import { Client, ClientOptions } from "discord.js";
-import EventRegistry from "./core/Registry/EventRegistry";
-import CommandRegistry from "./core/Registry/CommandRegistry";
-import MonitorRegistry from "./core/Registry/MonitorRegistry";
+import EventRegistry from "./core/registry/EventRegistry";
+import CommandRegistry from "./core/registry/CommandRegistry";
+import MonitorRegistry from "./core/registry/MonitorRegistry";
 import mongoose from "mongoose";
+import ALogger from "./util/Logger";
+
 class Rice extends Client {
+  public logger: ALogger = new ALogger();
   public eventRegistry: EventRegistry = new EventRegistry(this);
   public commandRegistry: CommandRegistry = new CommandRegistry();
   public monitorRegistry: MonitorRegistry = new MonitorRegistry(this);
@@ -16,12 +19,15 @@ class Rice extends Client {
       })
       .then(
         () => {
-          console.log("Logged into Mongo!");
+          this.logger.log("Logged into Mongo!", this.logger.levels.INFO);
         },
         (err: any) => {
           throw err;
         }
       );
+  }
+  get getLogger() {
+    return this.logger;
   }
   static get client() {
     return this;

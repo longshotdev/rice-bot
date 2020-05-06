@@ -29,7 +29,7 @@ class Monitor {
     if (ignoreSelf) this.ignoreSelf = ignoreSelf;
     if (allowedTypes) this.allowedTypes = allowedTypes;
   }
-  public async run(_message: Message, _client: Rice): Promise<void> {}
+  public async run(_message: Message, _client: Rice): Promise<Message | void> {}
   shouldRun(message: Message, client: Rice) {
     return (
       this.enabled &&

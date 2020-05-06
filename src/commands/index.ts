@@ -13,11 +13,20 @@ import test from "./Fun/test";
 
 import kick from "./Moderation/kick";
 
+/**
+ * System Module
+ */
+import help from "./System/help";
+import info from "./System/info";
 export default {
   fun: {
     test,
   },
   moderation: {
     kick,
+  },
+  system: {
+    help,
+    info,
   },
 };

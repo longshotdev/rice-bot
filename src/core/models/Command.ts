@@ -32,9 +32,9 @@ class Command {
     this.description = description || "Unspecified.";
   }
   public async run(
+    _client: Rice,
     _message: Message,
-    [..._args],
-    _client: Rice
+    ..._args: any
   ): Promise<Message | void> {}
   get getRunIn() {
     return this.runIn;

@@ -3,7 +3,7 @@ import Command from "../../core/models/Command";
 export default class extends Command {
   constructor() {
     super({
-      name: "true",
+      name: "kick",
       enable: true,
       cooldown: 0,
       runIn: ["text"],

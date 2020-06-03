@@ -2,7 +2,9 @@ import CommandStore from "../stores/CommandStore";
 import Command from "../models/Command";
 import Commands from "../../commands";
 import _ from "lodash";
-
+/**
+ * Keeping it like this cause im a lazy fucker /shrug
+ */
 class CommandRegistry {
   private commandStore: CommandStore = new CommandStore();
   constructor() {
@@ -14,6 +16,7 @@ class CommandRegistry {
     this.registerModule(Commands.fun, "Fun");
     this.registerModule(Commands.moderation, "Moderation");
     this.registerModule(Commands.system, "System");
+    this.registerModule(Commands.music, "Music");
   }
   public registerModule(module: Object, moduleName: string) {
     for (let [, command] of Object.entries(module)) {

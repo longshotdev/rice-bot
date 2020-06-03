@@ -18,6 +18,12 @@ import kick from "./Moderation/kick";
  */
 import help from "./System/help";
 import info from "./System/info";
+
+/**
+ * Music Module
+ */
+// import play from "./Music/play";
+
 export default {
   fun: {
     test,
@@ -29,4 +35,5 @@ export default {
     help,
     info,
   },
+  music: {},
 };

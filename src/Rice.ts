@@ -3,31 +3,27 @@ import EventRegistry from "./core/registry/EventRegistry";
 import CommandRegistry from "./core/registry/CommandRegistry";
 import MonitorRegistry from "./core/registry/MonitorRegistry";
 import mongoose from "mongoose";
-import ALogger from "./util/Logger";
+import Logger from "./util/Logger";
+const yapi = require("simple-youtube-api");
 
 class Rice extends Client {
-  public logger: ALogger = new ALogger();
+  private Alogger: Logger = new Logger();
   public eventRegistry: EventRegistry = new EventRegistry(this);
   public commandRegistry: CommandRegistry = new CommandRegistry();
   public monitorRegistry: MonitorRegistry = new MonitorRegistry(this);
+  private youtube: any = new yapi(process.env.YOUTUBE_KEY);
   constructor(clientOptions?: ClientOptions) {
     super(clientOptions);
-    mongoose
-      .connect(<string>process.env.MONGO_URL, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-      })
-      .then(
-        () => {
-          this.logger.log("Logged into Mongo!", this.logger.levels.INFO);
-        },
-        (err: any) => {
-          throw err;
-        }
-      );
+    mongoose.connect(<string>process.env.MONGO_URL, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
   }
-  get getLogger() {
-    return this.logger;
+  get youtubeSearch() {
+    return this.youtube;
+  }
+  get logger(): Logger {
+    return this.Alogger;
   }
   static get client() {
     return this;

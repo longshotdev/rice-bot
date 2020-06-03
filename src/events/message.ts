@@ -5,8 +5,8 @@ class Message extends Event {
   constructor() {
     super("message");
   }
-  public run(_client: Rice, [msg, ..._args]: any) {
-    _client.monitorRegistry.getMonitorStore.run(<DiscordMessage>msg);
+  public run(client: Rice, [msg, ..._args]: any) {
+    client.monitorRegistry.getMonitorStore.run(<DiscordMessage>msg, client);
   }
 }
 export default Message;

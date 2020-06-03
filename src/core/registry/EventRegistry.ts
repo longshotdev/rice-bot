@@ -2,26 +2,26 @@ import EventStore from "../stores/EventStore";
 import Event from "../models/Event";
 import Events from "../../events";
 import Rice from "../../Rice";
-class EventRegistry {
-  private eventStore: EventStore = new EventStore();
+import Registry from "./Registry";
+class EventRegistry extends Registry<Event> {
   private client: Rice;
   constructor(client: Rice) {
+    let eventStore = new EventStore();
+    super(eventStore);
     this.client = client;
     this.init();
   }
   private init(): void {
-    this.registerAll(new Events.message(), new Events.ready());
+    super.registerAll(
+      (v: Event) => this.addListener(v), // imagine using sped head ass anonymous functions lmfaoo
+      new Events.message(),
+      new Events.ready()
+    );
   }
-  public registerAll(...events: Event[]) {
-    events.forEach((event) => {
-      this.eventStore.set(event.name, event);
-      this.client.addListener(event.name, (...args) =>
-        event.run(this.client, args)
-      );
-    });
-  }
-  get getEventStore(): EventStore {
-    return this.eventStore;
+  private addListener(event: Event) {
+    this.client.addListener(event.name, (...args) =>
+      event.run(this.client, args)
+    );
   }
 }
 

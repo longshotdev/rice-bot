@@ -14,3 +14,4 @@ function clamp(numberToClamp: number, min: number, max: number): number {
   return Math.min(Math.max(numberToClamp, min), max);
 }
 export default clamp;
+// this is a test

@@ -1,5 +1,6 @@
 import Rice from "./src/Rice";
 import * as dotenv from "dotenv";
+import server from "./src/server/server";
 
 dotenv.config();
 let path;
@@ -14,6 +15,7 @@ switch (process.env.NODE_ENV) {
     path = `${__dirname}/.env.dev`;
 }
 dotenv.config({ path: path });
-const Bot = new Rice();
-Bot.login(process.env.DISCORD_TOKEN!);
-Bot;
+const Bot = Rice.getInstance();
+Bot.login(process.env.DISCORD_TOKEN!).then(() => {
+  server();
+});

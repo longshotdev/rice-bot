@@ -12,7 +12,7 @@ class MonitorRegistry extends Registry<Monitor> {
     this.registerAll(null, new Monitors.CM());
   }
   get getMonitorStore() {
-    let st = super.getStore();
+    let st = super.GetStore;
     return st;
   }
 }

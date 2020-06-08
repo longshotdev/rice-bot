@@ -1,0 +1,62 @@
+<%- include('pieces/header', {bot, user, path}) %>
+<link rel="stylesheet" href="/index.css" />
+<div>
+  <div class="header">
+    <div class="header-img"></div>
+    <div class="header-content">
+      <div id="typed-strings">
+        <p>Rice Bot</p>
+      </div>
+      <h1 id="title" align="center"></h1>
+      <h4 align="center">Dominate the fields.</h4>
+      <div class="buttons">
+        <div class="wrap-btn">
+          <button class="booton">Add to Server</button>
+        </div>
+        <div class="wrap-btn-alt">
+          <button class="booton alt-white">
+            Features
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-content">
+    <h2 class="lead secondary-content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+      do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+      do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.
+    </h2>
+    <div class="secondary-main-content">
+      <div class="secondary-img"></div>
+    </div>
+  </div>
+</div>
+<script>
+  var typed = new Typed("#title", {
+    stringsElement: "#typed-strings",
+    typeSpeed: 300,
+    backSpeed: 300,
+    loop: true,
+    showCursor: false,
+    startDelay: 300,
+  });
+  mdc.ripple.MDCRipple.attachTo(document.querySelector(".foo-button"));
+</script>
+<%- include('pieces/footer', {bot, user, path}) %>

@@ -1,7 +1,7 @@
 import Store from "../models/Store";
 
 interface IRegistry {
-  name: string;
+  name: String;
 }
 class Registry<T extends IRegistry> {
   private store: Store<String, T>;
@@ -25,8 +25,8 @@ class Registry<T extends IRegistry> {
     if (special) special();
     return this.store;
   }
-  public getStore() {
-    return (this.store as unknown) as T;
+  get GetStore() {
+    return this.store;
   }
 }
 

@@ -11,7 +11,7 @@ export default class extends Command {
       permLevel: 0,
       usage: "",
       description: "bruh",
-      aliases: [],
+      aliases: ["hel"],
     });
   }
   public async run(client: Rice, message: Message): Promise<Message | void> {

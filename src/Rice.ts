@@ -7,17 +7,25 @@ import Logger from "./util/Logger";
 const yapi = require("simple-youtube-api");
 
 class Rice extends Client {
+  public static INSTANCE: Rice;
   private Alogger: Logger = new Logger();
   public eventRegistry: EventRegistry = new EventRegistry(this);
   public commandRegistry: CommandRegistry = new CommandRegistry();
   public monitorRegistry: MonitorRegistry = new MonitorRegistry(this);
   private youtube: any = new yapi(process.env.YOUTUBE_KEY);
-  constructor(clientOptions?: ClientOptions) {
+  private constructor(clientOptions?: ClientOptions) {
     super(clientOptions);
     mongoose.connect(<string>process.env.MONGO_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
+  }
+  static getInstance(): Rice {
+    if (!Rice.INSTANCE) {
+      Rice.INSTANCE = new Rice();
+    }
+
+    return Rice.INSTANCE;
   }
   get youtubeSearch() {
     return this.youtube;

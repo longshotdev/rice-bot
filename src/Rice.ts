@@ -15,10 +15,12 @@ class Rice extends Client {
   private youtube: any = new yapi(process.env.YOUTUBE_KEY);
   private constructor(clientOptions?: ClientOptions) {
     super(clientOptions);
-    mongoose.connect(<string>process.env.MONGO_URL, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    });
+    mongoose
+      .connect(<string>process.env.MONGO_URL, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+      })
+      .catch(() => {});
   }
   static getInstance(): Rice {
     if (!Rice.INSTANCE) {

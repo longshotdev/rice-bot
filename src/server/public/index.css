@@ -120,9 +120,11 @@ button:focus {
 button:active {
   transform: scale(0.99);
 }
+
 .alt-white {
   background-color: black;
 }
+
 .btnspan {
   display: inline; /* the default for span */
   padding-right: 100vw;

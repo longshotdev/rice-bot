@@ -3,21 +3,34 @@
 html {
   height: 100%;
 }
+
+.wrapper {
+  flex: 1;
+  padding: 20px;
+  margin-top: 30px;
+}
+
 body::-webkit-scrollbar {
   width: 1em;
 }
+
 body::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 .container {
   flex: 1;
   padding: 20px;
   margin-top: 30px;
 }
+.container-fluid {
+  flex: 1;
+}
 body::-webkit-scrollbar-thumb {
   background-color: darkgrey;
   outline: 1px solid slategrey;
 }
+
 body {
   display: flex;
   flex-direction: column;

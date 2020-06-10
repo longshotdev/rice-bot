@@ -23,9 +23,11 @@ body::-webkit-scrollbar-track {
   padding: 20px;
   margin-top: 30px;
 }
+
 .container-fluid {
   flex: 1;
 }
+
 body::-webkit-scrollbar-thumb {
   background-color: darkgrey;
   outline: 1px solid slategrey;

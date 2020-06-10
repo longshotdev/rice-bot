@@ -1,7 +1,7 @@
 import unknownTest, { TestInterface } from "ava";
 import Rice from "../src/Rice";
 import createClient from "./helpers/createClient";
-
+require("dotenv").config();
 const ava = unknownTest as TestInterface<{
   client: Rice;
 }>;

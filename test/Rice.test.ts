@@ -13,7 +13,3 @@ ava.before(
     };
   }
 );
-
-ava("Is Rice gucci?", (test) => {
-  test.not(undefined, Rice, "Check if Rice is ok.");
-});

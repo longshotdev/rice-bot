@@ -1,3 +1,29 @@
 <%- include('../pieces/header', {bot, user, path}) %>
-<div class="container"></div>
+<link rel="stylesheet" href="/guild/dashboard.css" />
+<div class="container-fluid d-flex h-100 flex-column">
+  <div class="row flex-fill d-flex justify-content-start">
+    <nav class="dnavbar">
+      <div class="dnavbar-icon">
+      <% if (guild.icon) { %>
+                <img class="dnavbar-img" src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png?size=64" />
+      <% } else {%>
+          <div class="dnavbar-img-div dnavbar-img">
+            <%= guild.name.split(' ').map(v => v[0]).join('') %>
+          </div>
+      <% } %>
+      <span id="member-count">Member Count: <%= guild.memberCount %></span>
+      </div>
+      <div class="dnavbar-category">
+        <a class="dnavbar-link">Dashboard</a>
+        <a class="dnavbar-link">Commands</a>
+        <a class="dnavbar-link">Modules</a>
+        <a class="dnavbar-link">Mod-Log</a>
+      </div>
+    </nav>
+    <div class="container">
+      <h1>Welcome to <%= guild.name %></h1>
+    </div>
+  </div>
+</div>
+</div>
 <%- include('../pieces/footer',{bot, user, path}) %>

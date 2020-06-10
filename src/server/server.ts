@@ -140,6 +140,7 @@ export default () => {
   });
   server.get("/dashboard/:guildID", checkAuthGuild, async (req, res) => {
     renderTemplate(res, req, "guilds/dashboard.ejs", {
+      guild: Rice.getInstance().guilds.cache.get(req.params.guildID),
       bot: {
         application: await Rice.getInstance().fetchApplication(),
         user: {

@@ -13,3 +13,6 @@ ava.before(
     };
   }
 );
+ava("choke on my dick", (test): void => {
+  test.pass();
+});

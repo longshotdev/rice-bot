@@ -24,6 +24,24 @@ class MonitorStore extends Store<String, Monitor> {
       }
     }
   }
+  public disableMonitor(name: string) {
+    let monitor = super.getStore.find((monitor) => monitor.name === name);
+    if (!monitor)
+      throw new Error("Couldn't find a montitor with '" + name + "'.");
+    monitor.enabled = false;
+  }
+  public enableMonitor(name: string) {
+    let monitor = super.getStore.find((monitor) => monitor.name === name);
+    if (!monitor)
+      throw new Error("Couldn't find a montitor with '" + name + "'.");
+    monitor.enabled = true;
+  }
+  public toggleMonitor(name: string) {
+    let monitor = super.getStore.find((monitor) => monitor.name === name);
+    if (!monitor)
+      throw new Error("Couldn't find a montitor with '" + name + "'.");
+    monitor.enabled = !monitor.enabled;
+  }
 }
 
 export default MonitorStore;

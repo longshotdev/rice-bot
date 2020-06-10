@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon index.ts",
-    "test": "jest",
+    "test": "ava-ts --timeout=2m",
     "start": "env NODE_ENV=production nodemon index.ts"
   },
   "engines": {
@@ -21,6 +21,8 @@
     "@types/mongoose": "^5.7.12",
     "@types/node": "^13.11.1",
     "@types/node-fetch": "^2.5.7",
+    "ava": "^3.8.2",
+    "ava-ts": "^0.25.2",
     "cachegoose": "^8.0.0",
     "chalk": "^4.0.0",
     "cors": "^2.8.5",
@@ -46,6 +48,7 @@
     "ytdl-core-discord": "^1.2.0"
   },
   "devDependencies": {
+    "@ava/typescript": "^1.1.1",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/register": "^7.9.0",
@@ -58,5 +61,15 @@
     "lodash": "^4.17.15",
     "node-pre-gyp": "^0.15.0",
     "ts-jest": "^25.4.0"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.ts"
+    ],
+    "typescript": {
+      "extensions": [
+        "ts"
+      ]
+    }
   }
 }

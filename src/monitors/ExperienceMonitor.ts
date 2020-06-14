@@ -3,6 +3,7 @@ import { Message } from "discord.js";
 import Rice from "../Rice";
 import ExperienceController from "../api/controller/ExperienceController";
 import { User } from "../api/controller/IExperienceController";
+import isCommand from "../util/isCommand";
 
 export default class extends Monitor {
   constructor() {
@@ -13,7 +14,7 @@ export default class extends Monitor {
     });
   }
   public async run(message: Message, _client: Rice): Promise<Message | void> {
-    if (message.guild) {
+    if (message.guild && !(await isCommand(message))) {
       ExperienceController.getAndUpdateUser(
         message.guild.id,
         message.author.id,

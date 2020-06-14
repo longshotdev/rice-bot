@@ -24,6 +24,10 @@ import info from "./System/info";
  */
 // import play from "./Music/play";
 
+/**
+ * Econ Module
+ */
+import top from "./Economy/top";
 export default {
   fun: {
     test,
@@ -36,4 +40,7 @@ export default {
     info,
   },
   music: {},
+  economy: {
+    top,
+  },
 };

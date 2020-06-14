@@ -1,6 +1,5 @@
 import IExperienceController, { IE, User } from "./IExperienceController";
 import { Snowflake, Guild } from "discord.js";
-import { Document } from "mongoose";
 
 interface getAndUpdateCallback {
   (cfg: User): User;
@@ -94,12 +93,9 @@ async function doesUserExist(
           },
         },
       },
-      { upsert: true, new: true },
-      (err, model: Document) => {
-        if (err) throw err;
-        model.save();
-      }
+      { upsert: true, new: true }
     );
+    await model.save();
     let modelData = <IE>(<unknown>model);
     let user = modelData.users.find((user) => user.id === user.id)!;
     return user;

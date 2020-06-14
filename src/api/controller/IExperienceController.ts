@@ -12,6 +12,12 @@ export interface IE {
 }
 const IESchema = new Schema({
   guild: { type: String, required: true, unique: true },
-  users: { type: Array, required: true },
+  users: [
+    {
+      id: { type: String, required: true },
+      experience: { type: Number, required: true },
+      level: { type: Number, required: true },
+    },
+  ],
 });
 export default mongoose.model("experience", IESchema);

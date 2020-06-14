@@ -1,11 +1,12 @@
 import Monitor from "../core/models/Monitor";
-import { Message } from "discord.js";
+import { Message, Snowflake } from "discord.js";
 import Rice from "../Rice";
 import ExperienceController from "../api/controller/ExperienceController";
 import { User } from "../api/controller/IExperienceController";
 import isCommand from "../util/isCommand";
 
 export default class extends Monitor {
+  private experienceTimeout: Set<Snowflake> = new Set<Snowflake>();
   constructor() {
     super({
       enabled: true,
@@ -15,6 +16,7 @@ export default class extends Monitor {
   }
   public async run(message: Message, _client: Rice): Promise<Message | void> {
     if (message.guild && !(await isCommand(message))) {
+      if (this.experienceTimeout.has(message.author.id)) return;
       ExperienceController.getAndUpdateUser(
         message.guild.id,
         message.author.id,
@@ -26,6 +28,11 @@ export default class extends Monitor {
               `You've leveled up to level **${curLevel}**! Good job idiot.`
             );
           }
+          this.experienceTimeout.add(message.author.id);
+          setTimeout(() => {
+            // Removes the user from the set after 2.5 seconds
+            this.experienceTimeout.delete(message.author.id);
+          }, 60000); // TODO: make this able for guild settings change shit fuck
           return {
             experience,
             id: message.author.id,

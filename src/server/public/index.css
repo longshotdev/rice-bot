@@ -26,8 +26,8 @@
   background-image: url("/images/asiafield_8k_3840x2160.jpg");
   background-position-y: center;
   /* Add the blur effect */
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
   background-size: auto;
   background-repeat: no-repeat;
   height: 70vh;

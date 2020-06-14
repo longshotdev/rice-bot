@@ -16,6 +16,9 @@ export default class extends Monitor {
     for (const pfx of guildSettings.config.prefix) {
       if (message.content.startsWith(pfx)) prefix = pfx;
     }
+    if (message.mentions.has(client.user!)) {
+      return message.reply(`My prefix is \`${prefix}\``);
+    }
     if (!message.content.startsWith(prefix)) return; // this is to ensure that if the user did not use +, they wont get fucked dong
 
     const command = message.content.slice(prefix.length).trim().split(/ +/g);

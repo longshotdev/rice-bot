@@ -14,16 +14,25 @@
       <span id="member-count">Member Count: <%= guild.memberCount %></span>
       </div>
       <div class="dnavbar-category">
-        <a class="dnavbar-link">Dashboard</a>
-        <a class="dnavbar-link">Commands</a>
-        <a class="dnavbar-link">Modules</a>
-        <a class="dnavbar-link">Mod-Log</a>
+        <a class="dnavbar-link" onclick="linkTo('/')">Dashboard</a>
+        <a class="dnavbar-link" onclick="linkTo('/commands')">Commands</a>
+        <a class="dnavbar-link" onclick="linkTo('/modules')">Modules</a>
+        <a class="dnavbar-link" onclick="linkTo('/modlog')">Mod-Log</a>
       </div>
     </nav>
-    <div class="container">
-      <h1>Welcome to <%= guild.name %></h1>
+    <div class="container nopadding bitchfaggot">
+      <span>
+        <h1><%= guild.name %>'s Dashboard <sub><%= guild.memberCount %> members.</sub></h1>
+      </span>
     </div>
   </div>
 </div>
 </div>
+<script>
+  function linkTo(path) {
+     var getUrl = window.location;
+    var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1] + "/" + getUrl.pathname.split('/')[2];
+    window.location.href = baseUrl + path;
+  }
+</script>
 <%- include('../pieces/footer',{bot, user, path}) %>

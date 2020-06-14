@@ -44,3 +44,9 @@ body {
   padding: 0;
   min-height: 100%;
 }
+.nopadding {
+  padding: 0 !important;
+}
+.nomargin {
+  margin: 0 !important;
+}

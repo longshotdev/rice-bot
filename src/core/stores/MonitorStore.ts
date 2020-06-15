@@ -18,7 +18,7 @@ class MonitorStore extends Store<String, Monitor> {
       ) {
         monit.run(msg, this.client).catch((Exception: Error) => {
           msg.channel.send(
-            `There was an error executing your command. \n \`\`\`${Exception.message}\`\`\``
+            `There was an error executing monitor. \n \`\`\`${Exception.message}\`\`\``
           );
         });
       }

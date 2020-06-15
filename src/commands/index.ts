@@ -18,7 +18,7 @@ import kick from "./Moderation/kick";
  */
 import help from "./System/help";
 import info from "./System/info";
-
+import config from "./System/config";
 /**
  * Music Module
  */
@@ -38,6 +38,7 @@ export default {
   system: {
     help,
     info,
+    config,
   },
   music: {},
   economy: {

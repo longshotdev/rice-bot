@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/index.css" />
 <div>
   <div class="header">
-    <div class="header-img"></div>
+    <div class="header-img" id="particles-js"></div>
     <div class="header-content">
       <div id="typed-strings">
         <p>Rice Bot</p>
@@ -63,5 +63,8 @@
   function redirect(path) {
     window.location.href = path;
   }
+  particlesJS.load("particles-js", "/particles.json", function () {
+    console.log("callback - particles.js config loaded");
+  });
 </script>
 <%- include('pieces/footer', {bot, user, path}) %>

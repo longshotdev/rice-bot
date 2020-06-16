@@ -18,12 +18,16 @@ import kick from "./Moderation/kick";
  */
 import help from "./System/help";
 import info from "./System/info";
-
+import config from "./System/config";
 /**
  * Music Module
  */
 // import play from "./Music/play";
 
+/**
+ * Econ Module
+ */
+import top from "./Economy/top";
 export default {
   fun: {
     test,
@@ -34,6 +38,10 @@ export default {
   system: {
     help,
     info,
+    config,
   },
   music: {},
+  economy: {
+    top,
+  },
 };

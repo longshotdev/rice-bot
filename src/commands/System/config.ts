@@ -5,24 +5,21 @@ import { Message } from "discord.js";
 export default class extends Command {
   constructor() {
     super({
-      name: "reserve",
+      name: "config",
       enable: true,
       cooldown: 0,
       runIn: ["text"],
       permLevel: 0,
-      usage: "",
-      description:
-        "Reserves VC for {x} amt of people. You choose who gets moved in.",
+      usage: "<set|remove|reset|show:default> (key:K) (value:V)",
+      description: "bruh",
       aliases: [],
     });
   }
   public async run(
     _client: Rice,
-    message: Message,
-    [..._args]
+    _message: Message,
+    args: any
   ): Promise<Message | void> {
-    let timer = _args[0];
-    console.log(_args);
-    message.channel.send("reserved for " + timer + " minutes.");
+    console.log(args);
   }
 }

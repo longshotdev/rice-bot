@@ -48,6 +48,7 @@ export default class extends Monitor {
 async function parser(command: Command, args: Array<String> | undefined) {
   let ags = {};
   const usage = await parseUsage(command.usage);
+  console.log(usage);
   usage.forEach((tag: Tag, index: number) => {
     Object.assign(ags, {
       [tag.tag]: args![index],
@@ -59,7 +60,7 @@ async function parser(command: Command, args: Array<String> | undefined) {
 const open = ["[", "(", "<"];
 const close = ["]", ")", ">"];
 const space = [" ", "\n"];
-
+const seperator = [":"];
 async function parseUsage(usageString: string) {
   let metadata: CommandUsageMetadata = {
     tags: [],
@@ -77,6 +78,7 @@ async function parseUsage(usageString: string) {
     if (open.includes(char)) tagOpen(metadata, char);
     else if (close.includes(char)) tagClose(metadata, char);
     else if (space.includes(char)) tagSpace(metadata, char);
+    else if (seperator.includes(char)) tagSeperate(metadata, char);
     else metadata.current += char;
   }
   return metadata.tags;
@@ -97,7 +99,9 @@ async function tagSpace(metadata: CommandUsageMetadata, char: string) {
   if (metadata.opened) throw `spaces aren't allowed inside a tag`;
   if (metadata.current) throw `there can't be a literal outside a tag.`;
 }
-
+async function tagSeperate(_metadata: CommandUsageMetadata, _char: string) {
+  throw new Error("METHOD NOT IMPLEMENTED.");
+}
 interface CommandUsageMetadata {
   tags: Array<Tag>;
   opened: boolean;

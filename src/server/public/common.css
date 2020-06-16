@@ -45,10 +45,8 @@ body {
   min-height: 100%;
 }
 
-/* 
-Removed !important in commit https://github.com/AndyIsCool5463/rice-bot/pull/9
-possibly will fuck up so its here for later.
-*/
+/* Removed !important in commit https://github.com/AndyIsCool5463/rice-bot/pull/9
+ * possibly will fuck up so its here for later. */
 
 .nopadding {
   padding: 0;

@@ -5,4 +5,5 @@ export default interface IMonitorOptions {
   ignoreSelf?: boolean;
   ignoreEdits?: boolean;
   name: string;
+  emitsOnlyIn: string[];
 }

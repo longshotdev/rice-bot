@@ -31,7 +31,12 @@ async function createGuildSettings(
     nsfw: false,
     logChannel: "ASD",
     EventJoin: false,
-    disabledCommands: [],
+    disabledCommandsPerChannel: new Map<string, string[]>(),
+    disabledCategoriesPerChannel: new Map<string, string[]>(),
+    disabledModulesPerChannel: new Map<string, string[]>(),
+    disabledCategoriesServerWide: new Array<string>(),
+    disabledCommandsServerWide: new Array<string>(),
+    disabledModulesServerWide: new Array<string>(),
   };
   if (config) cfg = config;
   let data = await GuildSettingsModel.create({

@@ -7,7 +7,8 @@ export default class extends Monitor {
   constructor() {
     super({
       enabled: true,
-      name: "Command Monitor",
+      name: "command",
+      emitsOnlyIn: [],
     });
   }
   public async run(message: Message, client: Rice): Promise<Message | void> {
@@ -23,6 +24,7 @@ export default class extends Monitor {
     if (!message.content.startsWith(prefix)) return; // this is to ensure that if the user did not use +, they wont get fucked dong
 
     const command = message.content.slice(prefix.length).trim().split(/ +/g);
+
     const args = message.content
       .slice(prefix.length)
       .trim()
@@ -36,15 +38,40 @@ export default class extends Monitor {
         command[0].toLowerCase()
       );
     if (!commandRunnable) return;
+
+    // serverwide
+    // prettier-ignore
+
+    if (guildSettings.config.disabledCategoriesServerWide === "all") return handleNoShit(message);
+    // prettier-ignore
+    if (guildSettings.config.disabledCategoriesServerWide.includes(<string>commandRunnable.category)) return handleNoShit(message);
+    // prettier-ignore
+    if (guildSettings.config.disabledCommandsServerWide === "all") return handleNoShit(message); // TODO: MAKE THIS ALLOW SYSTEM ONLY COMMANDS.
+    // prettier-ignore
+    if (guildSettings.config.disabledCommandsServerWide.includes(<string>commandRunnable.name)) return handleNoShit(message);
+
+    // channel
+    // prettier-ignore
+    try {
+    if (guildSettings.config.disabledCategoriesPerChannel.get(message.channel.id)?.includes(commandRunnable.category)) return handleNoShit(message);
+    } catch (e) {
+      // THIS IS THE ONLU NIGGER SHIT THAT DOESNT WORK FUCK YOU SUCK MY COCK
+    }
+    // prettier-ignore
+    if (guildSettings.config.disabledCommandsPerChannel.has(<string>commandRunnable.name)) return handleNoShit(message);
+
     let ags = await parser(commandRunnable, args);
     commandRunnable.run(client, message, ags).catch((e: Error) => {
+      console.log(e);
       message.channel.send(
         `There was an error executing your command. \n \`\`\`${e.message}\`\`\``
       );
     });
   }
 }
-
+async function handleNoShit(msg: Message) {
+  msg.react("❌");
+}
 async function parser(command: Command, args: Array<String> | undefined) {
   let ags = {};
   const usage = await parseUsage(command.usage);

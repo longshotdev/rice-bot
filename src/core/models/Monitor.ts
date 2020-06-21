@@ -12,6 +12,7 @@ class Monitor {
   public ignoreSelf: boolean = true;
   public ignoreEdits: boolean = true;
   public allowedTypes: string[] = ["DEFAULT"];
+  public emitsOnlyIn: string[] | string = "all";
   public name: string;
 
   constructor({
@@ -21,6 +22,7 @@ class Monitor {
     ignoreSelf,
     allowedTypes,
     name,
+    emitsOnlyIn,
   }: IMonitorOptions) {
     this.name = name;
     this.enabled = enabled;
@@ -28,6 +30,7 @@ class Monitor {
     if (ignoreEdits) this.ignoreEdits = ignoreEdits;
     if (ignoreSelf) this.ignoreSelf = ignoreSelf;
     if (allowedTypes) this.allowedTypes = allowedTypes;
+    if (emitsOnlyIn) this.emitsOnlyIn = emitsOnlyIn;
   }
   public async run(_message: Message, _client: Rice): Promise<Message | void> {}
   shouldRun(message: Message, client: Rice) {

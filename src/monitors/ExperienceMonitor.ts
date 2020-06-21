@@ -11,8 +11,9 @@ export default class extends Monitor {
   constructor() {
     super({
       enabled: true,
-      name: "Experience Monitor",
+      name: "experience",
       allowedTypes: ["guild"],
+      emitsOnlyIn: [],
     });
   }
   public async run(message: Message, _client: Rice): Promise<Message | void> {

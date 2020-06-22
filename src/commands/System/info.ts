@@ -1,5 +1,5 @@
 import Command from "../../core/models/Command";
-import Rice from "../../Rice";
+import client from "../../Rice";
 import { Message } from "discord.js";
 import PageEmbed from "../../core/tools/PageEmbed";
 import Discord from "discord.js";
@@ -17,17 +17,17 @@ export default class extends Command {
       aliases: [],
     });
   }
-  public async run(client: Rice, message: Message): Promise<Message | void> {
-    const embed = new PageEmbed(client, message);
+  public async run(message: Message): Promise<Message | void> {
+    const embed = new PageEmbed(client.getInstance(), message);
     embed.addPages([
       new Page({
         title: "Rice Market Stats:",
         author: {
-          name: client.user?.username,
-          iconURL: client.user?.displayAvatarURL(),
+          name: client.getInstance().user?.username,
+          iconURL: client.getInstance().user?.displayAvatarURL(),
         },
         thumbnail: {
-          url: client.user!.displayAvatarURL(),
+          url: client.getInstance().user!.displayAvatarURL(),
         },
         fields: [
           {
@@ -46,7 +46,7 @@ export default class extends Command {
           },
           {
             name: "Uptime:",
-            value: `${client.uptime}`,
+            value: `${client.getInstance().uptime}`,
             inline: true,
           },
           {
@@ -64,11 +64,15 @@ export default class extends Command {
       new Page({
         title: `${message.guild?.name}'s Stats`,
         author: {
-          name: client.user?.username,
-          iconURL: message.guild?.iconURL() || client.user?.defaultAvatarURL,
+          name: client.getInstance().user?.username,
+          iconURL:
+            message.guild?.iconURL() ||
+            client.getInstance().user?.defaultAvatarURL,
         },
         thumbnail: {
-          url: message.guild!.iconURL() || client.user!.defaultAvatarURL,
+          url:
+            message.guild!.iconURL() ||
+            client.getInstance().user!.defaultAvatarURL,
         },
         fields: [
           {
@@ -102,20 +106,20 @@ export default class extends Command {
         title: `Rice's Stats`,
         author: {
           name: "Global Stats",
-          iconURL: client.user?.displayAvatarURL(),
+          iconURL: client.getInstance().user?.displayAvatarURL(),
         },
         thumbnail: {
-          url: client.user!.displayAvatarURL(),
+          url: client.getInstance().user!.displayAvatarURL(),
         },
         fields: [
           {
             name: "Guild Count",
-            value: `${client.guilds.cache.size}`,
+            value: `${client.getInstance().guilds.cache.size}`,
             inline: true,
           },
           {
             name: "Member Count",
-            value: `${client.users.cache.size}`,
+            value: `${client.getInstance().users.cache.size}`,
             inline: true,
           },
           {

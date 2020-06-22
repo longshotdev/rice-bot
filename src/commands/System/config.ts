@@ -1,5 +1,4 @@
 import Command from "../../core/models/Command";
-import Rice from "../../Rice";
 import { Message } from "discord.js";
 
 export default class extends Command {
@@ -15,11 +14,7 @@ export default class extends Command {
       aliases: [],
     });
   }
-  public async run(
-    _client: Rice,
-    _message: Message,
-    args: any
-  ): Promise<Message | void> {
+  public async run(_message: Message, args: any): Promise<Message | void> {
     console.log(args);
   }
 }

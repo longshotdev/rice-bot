@@ -14,6 +14,7 @@ export default class extends Monitor {
       name: "experience",
       allowedTypes: ["guild"],
       emitsOnlyIn: [],
+      emitsOnEvent: ["message"],
     });
   }
   public async run(message: Message, _client: Rice): Promise<Message | void> {

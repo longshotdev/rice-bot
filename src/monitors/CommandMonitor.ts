@@ -9,6 +9,7 @@ export default class extends Monitor {
       enabled: true,
       name: "command",
       emitsOnlyIn: [],
+      emitsOnEvent: ["message"],
     });
   }
   public async run(message: Message, client: Rice): Promise<Message | void> {
@@ -61,7 +62,7 @@ export default class extends Monitor {
     if (guildSettings.config.disabledCommandsPerChannel.has(<string>commandRunnable.name)) return handleNoShit(message);
 
     let ags = await parser(commandRunnable, args);
-    commandRunnable.run(client, message, ags).catch((e: Error) => {
+    commandRunnable.run(message, ags).catch((e: Error) => {
       console.log(e);
       message.channel.send(
         `There was an error executing your command. \n \`\`\`${e.message}\`\`\``
@@ -88,12 +89,15 @@ const open = ["[", "(", "<"];
 const close = ["]", ")", ">"];
 const space = [" ", "\n"];
 const seperator = [":"];
+// const OR = ["|"];
 async function parseUsage(usageString: string) {
   let metadata: CommandUsageMetadata = {
     tags: [],
     opened: false,
+    value: false,
     current: "",
     type: TagType.OPTIONAL,
+    allowedKW: new Array<string>(),
     on: 0,
     last: false,
     char: 0,
@@ -103,29 +107,41 @@ async function parseUsage(usageString: string) {
     const char = usageString[i];
 
     if (open.includes(char)) tagOpen(metadata, char);
+    // OPEN = TRUE
     else if (close.includes(char)) tagClose(metadata, char);
+    // open = FALSE; NOW WE CLOSE AND CREATE THIS INTO A TAG.
     else if (space.includes(char)) tagSpace(metadata, char);
+    // wtf does this do?
     else if (seperator.includes(char)) tagSeperate(metadata, char);
-    else metadata.current += char;
+    // I DONT KNOW WHAT IT DOES EITHER
+    else metadata.current += char; // append this character
+    console.log(`CHAR: ${char} | TYPE: ${metadata.type} | ${metadata.current}`);
   }
   return metadata.tags;
 }
+
 async function tagOpen(metadata: CommandUsageMetadata, char: string) {
   if (metadata.opened) throw `stupid ass.`;
   metadata.opened = !metadata.opened;
   metadata.type = open.indexOf(char);
 }
+
 async function tagClose(metadata: CommandUsageMetadata, _char: string) {
   metadata.opened = !metadata.opened;
-  metadata.tags.push(new Tag(metadata.current, metadata.on, TagType.REQUIRED));
+  metadata.tags.push(
+    new Tag(metadata.current, metadata.on, TagType.REQUIRED, metadata.allowedKW)
+  );
   metadata.on++;
   metadata.current = "";
+  metadata.allowedKW = [];
 }
+
 async function tagSpace(metadata: CommandUsageMetadata, char: string) {
   if (char === "\n") throw `there can't be a line break in the usage string`;
   if (metadata.opened) throw `spaces aren't allowed inside a tag`;
   if (metadata.current) throw `there can't be a literal outside a tag.`;
 }
+
 async function tagSeperate(_metadata: CommandUsageMetadata, _char: string) {
   throw new Error("METHOD NOT IMPLEMENTED.");
 }
@@ -135,22 +151,31 @@ interface CommandUsageMetadata {
   type: TagType;
   current: string;
   on: number;
+  allowedKW: Array<string>;
+  value: boolean;
   last: boolean;
   char: number;
 }
 enum TagType {
   OPTIONAL,
-  SEMIOPTIONAL,
+  KEYVALUE,
   REQUIRED,
 }
 class Tag {
   public tag: string;
   public type: TagType;
+  public allowedKW: Array<string>;
   public count: number;
 
-  constructor(tag: string, count: number, type: TagType) {
+  constructor(
+    tag: string,
+    count: number,
+    type: TagType,
+    allowedKW: Array<string>
+  ) {
     this.tag = tag;
     this.count = count;
     this.type = type;
+    this.allowedKW = allowedKW;
   }
 }

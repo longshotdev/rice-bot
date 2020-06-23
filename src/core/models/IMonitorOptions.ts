@@ -6,4 +6,5 @@ export default interface IMonitorOptions {
   ignoreEdits?: boolean;
   name: string;
   emitsOnlyIn: string[];
+  emitsOnEvent: string[];
 }

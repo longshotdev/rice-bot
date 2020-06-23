@@ -9,10 +9,13 @@ export default class extends Command {
       cooldown: 0,
       runIn: ["text"],
       permLevel: 0,
-      usage: "",
+      usage: "<string> <string>",
       description: "bruh",
       aliases: [],
     });
   }
-  public async run(_message: Message): Promise<Message | void> {}
+  public async run(message: Message, args: any): Promise<Message | void> {
+    console.log(args);
+    message.channel.send(args);
+  }
 }

@@ -21,11 +21,24 @@ class MonitorStore extends Store<String, Monitor> {
         !(monit.ignoreBots && msg.author.bot) &&
         !(monit.ignoreSelf && this.client.user === msg.author) &&
         !(guild.config.disabledModulesServerWide === "all") &&
-        !guild.config.disabledModulesServerWide.includes(monit.name)
+        !guild.config.disabledModulesServerWide.includes(monit.name) &&
+        monit.emitsOnEvent.includes("message")
       ) {
         monit.run(msg, this.client).catch((Exception: Error) => {
           console.log(Exception);
           msg.channel.send(
+            `There was an error executing monitor. \n \`\`\`${Exception.message}\`\`\``
+          );
+        });
+      }
+    }
+  }
+  public async runMonitor(name: string, ...args: any) {
+    for (const monit of super.getStore.values()) {
+      if (monit.enabled && monit.emitsOnEvent.includes(name)) {
+        monit.run(...args).catch((Exception: Error) => {
+          console.log(Exception);
+          throw new Error(
             `There was an error executing monitor. \n \`\`\`${Exception.message}\`\`\``
           );
         });

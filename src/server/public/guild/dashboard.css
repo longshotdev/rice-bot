@@ -31,11 +31,23 @@ honestly don't like css
   align-self: center;
 }
 .dnavbar-img {
-  border-radius: 50%;
   margin-left: 10px;
   height: 128px;
   width: 128px;
+  border-radius: 50%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: white;
+  border-image: initial;
   align-self: center;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 /*
@@ -58,9 +70,26 @@ TODO: FIX PLEASE.
   border-color: white;
   border-image: initial;
 }
-
 .bitchfaggot {
   display: flex;
-  flex-direction: row;
-  margin: 10px;
+  flex-direction: column;
+  margin: 30px;
+  width: 100px;
+}
+.standardInfo {
+  list-style: none;
+  margin: 0;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.standardInfo > li {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: inline;
+}
+.limit-height {
+  display: block;
+  overflow-y: scroll;
+  max-height: 30vh;
 }

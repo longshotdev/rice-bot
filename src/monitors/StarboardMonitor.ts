@@ -12,8 +12,13 @@ export default class extends Monitor {
   }
   public async run(
     messageReaction: MessageReaction,
-    _user: User
+    user: User
   ): Promise<Message | void> {
-    console.log(messageReaction);
+    if (messageReaction.emoji.name != "⭐") return;
+    if (messageReaction.message.author.id === user.id)
+      return messageReaction.message.channel.send(
+        `${user}, you cannot star your own messages.`
+      );
+    messageReaction.message.channel.send("ok ur message has been starred.");
   }
 }

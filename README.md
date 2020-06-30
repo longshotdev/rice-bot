@@ -8,8 +8,7 @@
 ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m784818736-b5ee05189c50f2f367cebf78)
 ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m784818736-b5ee05189c50f2f367cebf78)
 
-Fast, clean, countless features your server made in [discord.js](https://discord.js.org/) and [Typescript](https://www.typescriptlang.org/).
-Invite me _T.B.A_.
+# CHECK DEVELOP BRANCH FOR MORE INFORMATION
 
 # Features
 

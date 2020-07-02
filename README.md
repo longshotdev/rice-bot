@@ -8,14 +8,14 @@
 ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m784818736-b5ee05189c50f2f367cebf78?style=for-the-badge)
 ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m784818736-b5ee05189c50f2f367cebf78?style=for-the-badge)
 
-Fast, clean, countless features your server made in [discord.js](https://discord.js.org/) and [Typescript](https://www.typescriptlang.org/).
+Fast, clean, countless features for your server made in [discord.js](https://discord.js.org/) and [Typescript](https://www.typescriptlang.org/).
 Invite me _T.B.A_.
 
 # Features
 
 - ⏱ Fast. Definitely not hosted in some basement in China.
 - 🈁 Support for translations.
-- 📂 Using Redis and MongoDB for 🔥 blazingly fast read & write speeds.
+- 📂 Using MongoDB for 🔥 blazingly fast read & write speeds.
 - 🕸️ Sharding Support for global scaling.
 - <image src="https://raw.githubusercontent.com/remojansen/logo.ts/master/ts.png" height="16" /> Using typescript for clean code and no edge cases.
 

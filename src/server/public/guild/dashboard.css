@@ -70,12 +70,14 @@ TODO: FIX PLEASE.
   border-color: white;
   border-image: initial;
 }
+
 .bitchfaggot {
   display: flex;
   flex-direction: column;
   margin: 30px;
   width: 100px;
 }
+
 .standardInfo {
   list-style: none;
   margin: 0;
@@ -83,13 +85,16 @@ TODO: FIX PLEASE.
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
 .standardInfo > li {
   margin-left: 10px;
   margin-right: 10px;
   display: inline;
 }
+
 .limit-height {
   display: block;
   overflow-y: scroll;
+  min-height: 30vh;
   max-height: 30vh;
 }

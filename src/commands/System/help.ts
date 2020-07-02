@@ -1,6 +1,7 @@
 import Command from "../../core/models/Command";
-import Rice from "../../Rice";
+import client from "../../Rice";
 import { Message } from "discord.js";
+import Rice from "../../Rice";
 export default class extends Command {
   constructor() {
     super({
@@ -14,8 +15,8 @@ export default class extends Command {
       aliases: ["hel"],
     });
   }
-  public async run(client: Rice, message: Message): Promise<Message | void> {
-    const help: any = await this.buildHelp(client);
+  public async run(message: Message): Promise<Message | void> {
+    const help: any = await this.buildHelp(client.getInstance());
     const categories = Object.keys(help);
     const helpMessage = [];
     for (let cat = 0; cat < categories.length; cat++) {

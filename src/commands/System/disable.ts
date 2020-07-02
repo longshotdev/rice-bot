@@ -1,20 +1,21 @@
 import Command from "../../core/models/Command";
 import { Message } from "discord.js";
+
 export default class extends Command {
   constructor() {
     super({
-      name: "kick",
+      name: "disable",
       enable: true,
       cooldown: 0,
       runIn: ["text"],
       permLevel: 0,
-      usage: "<user> <reason>",
+      usage: "<string> <string>",
       description: "bruh",
       aliases: [],
     });
   }
-  public async run(_message: Message, _args: any): Promise<void> {
-    console.log(_args);
-    console.log("RAN KICK CMD");
+  public async run(message: Message, args: any): Promise<Message | void> {
+    console.log(args);
+    message.channel.send(args);
   }
 }

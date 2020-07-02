@@ -11,12 +11,16 @@ export default class extends Monitor {
   constructor() {
     super({
       enabled: true,
-      name: "Experience Monitor",
+      name: "experience",
       allowedTypes: ["guild"],
+      emitsOnlyIn: [],
+      emitsOnEvent: ["message"],
     });
   }
   public async run(message: Message, _client: Rice): Promise<Message | void> {
-    if ((await GuildSettingController.getGuild(message.guild!)).config.xp) {
+    if (
+      (await GuildSettingController.getGuild(message.guild!)).config.modules.xp
+    ) {
       if (message.guild && !(await isCommand(message))) {
         if (this.experienceTimeout.has(message.author.id)) return;
         ExperienceController.getAndUpdateUser(

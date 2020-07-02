@@ -1,6 +1,5 @@
 import Command from "../../core/models/Command";
 import { Message } from "discord.js";
-import Rice from "../../Rice";
 
 export default class extends Command {
   constructor() {
@@ -15,11 +14,7 @@ export default class extends Command {
       aliases: [],
     });
   }
-  public async run(
-    _client: Rice,
-    message: Message,
-    [..._args]
-  ): Promise<Message | void> {
+  public async run(message: Message, [..._args]): Promise<Message | void> {
     message.channel.send("hola como estas " + _args);
   }
 }

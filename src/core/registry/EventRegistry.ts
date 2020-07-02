@@ -15,7 +15,8 @@ class EventRegistry extends Registry<Event> {
     super.registerAll(
       (v: Event) => this.addListener(v), // imagine using sped head ass anonymous functions lmfaoo
       new Events.message(),
-      new Events.ready()
+      new Events.ready(),
+      new Events.MessageReactionAdd()
     );
   }
   private addListener(event: Event) {

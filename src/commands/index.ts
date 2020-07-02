@@ -5,7 +5,7 @@
 /**
  * Fun Module
  */
-import test from "./Fun/test";
+import test from "./Fun/okay";
 
 /**
  * Moderation Module

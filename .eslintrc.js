@@ -4,13 +4,12 @@ module.exports = {
     es2020: true,
   },
   extends: [
-    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
   ],
-  parser: "@typescript-eslint/parser",
+  parser: ["@typescript-eslint/parser", "babel-eslint"],
   parserOptions: {
-    ecmaVersion: 11,
+    ecmaVersion: 2020,
     sourceType: "module",
   },
   plugins: ["@typescript-eslint"],

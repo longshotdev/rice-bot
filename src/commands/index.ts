@@ -20,6 +20,7 @@ import help from "./System/help";
 import info from "./System/info";
 import config from "./System/config";
 import disable from "./System/disable";
+import reserve from "./System/reserve";
 /**
  * Music Module
  */
@@ -41,6 +42,7 @@ export default {
     info,
     config,
     disable,
+    reserve,
   },
   music: {},
   economy: {

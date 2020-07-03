@@ -4,6 +4,7 @@ import CommandRegistry from "./core/registry/CommandRegistry";
 import MonitorRegistry from "./core/registry/MonitorRegistry";
 import mongoose from "mongoose";
 import Logger from "./util/Logger";
+import TimerRegistry from "./core/registry/TimerRegistry";
 const yapi = require("simple-youtube-api");
 
 class Rice extends Client {
@@ -12,6 +13,7 @@ class Rice extends Client {
   public eventRegistry: EventRegistry = new EventRegistry(this);
   public commandRegistry: CommandRegistry = new CommandRegistry();
   public monitorRegistry: MonitorRegistry = new MonitorRegistry(this);
+  public timerRegistry: TimerRegistry = new TimerRegistry();
   private youtube: any = new yapi(process.env.YOUTUBE_KEY);
   private constructor(clientOptions?: ClientOptions) {
     super(clientOptions);

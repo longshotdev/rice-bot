@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <link rel='icon' href='<%= bot.user.avatarURL %>'>
   <title>
     <%= bot.user.username %>
@@ -40,7 +41,7 @@
 
 <body>
   <div>
-    <nav class="navbar transparent navbar-inverse navbar-expand-sm navbar-dark bg-dark">
+    <nav class="navbar transparent navbar-expand-lg navbar-inverse navbar-expand-sm navbar-fluid navbar-dark bg-dark">
       <a class="navbar-brand" href="/"><img src="<%= bot.user.avatarURL %>" width="30" height="30"
           class="d-inline-block rounded-circle" alt="<%= bot.user.username %>" />
         <span class="align-middle"><%= bot.user.username %></span></a>

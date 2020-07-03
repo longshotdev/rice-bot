@@ -1,25 +1,20 @@
 import Command from "../../core/models/Command";
 import { Message } from "discord.js";
-import Rice from "../../Rice";
 
 export default class extends Command {
   constructor() {
     super({
-      name: "true",
+      name: "config",
       enable: true,
       cooldown: 0,
       runIn: ["text"],
       permLevel: 0,
-      usage: "",
+      usage: "<set|remove|reset|show:default> (key:K) (value:V)",
       description: "bruh",
       aliases: [],
     });
   }
-  public async run(
-    _client: Rice,
-    message: Message,
-    [..._args]
-  ): Promise<Message | void> {
-    message.channel.send("hola como estas " + _args);
+  public async run(_message: Message, args: any): Promise<Message | void> {
+    console.log(args);
   }
 }

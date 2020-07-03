@@ -1,20 +1,21 @@
 # Rice Bot
 
-![GitHub](https://img.shields.io/github/license/andyiscool5463/ricebot)
-![David](https://img.shields.io/david/andyiscool5463/ricebot)
-[![Build Status](https://travis-ci.com/AndyIsCool5463/rice-bot.svg?token=Syh8JoqVaQwAWirquxET&branch=master)](https://travis-ci.com/AndyIsCool5463/rice-bot)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7371b0fbdaea484aa52dbf8d9caa470c)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=AndyIsCool5463/rice-bot&utm_campaign=Badge_Grade)
-![Discord](https://img.shields.io/discord/285078632794161153)
-![Uptime Robot status](https://img.shields.io/uptimerobot/status/m784818736-b5ee05189c50f2f367cebf78)
-![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m784818736-b5ee05189c50f2f367cebf78)
+![GitHub](https://img.shields.io/github/license/andyiscool5463/rice-bot?style=for-the-badge)
+![David](https://img.shields.io/david/dev/andyiscool5463/rice-bot?style=for-the-badge)
+![Build Status](https://img.shields.io/travis/com/andyiscool5463/rice-bot?style=for-the-badge)
+![Codacy grade](https://img.shields.io/codacy/grade/7371b0fbdaea484aa52dbf8d9caa470c?style=for-the-badge)
+![Discord](https://img.shields.io/discord/285078632794161153?style=for-the-badge)
+![Uptime Robot status](https://img.shields.io/uptimerobot/status/m784818736-b5ee05189c50f2f367cebf78?style=for-the-badge)
+![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m784818736-b5ee05189c50f2f367cebf78?style=for-the-badge)
 
-# CHECK DEVELOP BRANCH FOR MORE INFORMATION
+Fast, clean, countless features for your server made in [discord.js](https://discord.js.org/) and [Typescript](https://www.typescriptlang.org/).
+Invite me _T.B.A_.
 
 # Features
 
 - ⏱ Fast. Definitely not hosted in some basement in China.
 - 🈁 Support for translations.
-- 📂 Using Redis and MongoDB for 🔥 blazingly fast read & write speeds.
+- 📂 Using MongoDB for 🔥 blazingly fast read & write speeds.
 - 🕸️ Sharding Support for global scaling.
 - <image src="https://raw.githubusercontent.com/remojansen/logo.ts/master/ts.png" height="16" /> Using typescript for clean code and no edge cases.
 

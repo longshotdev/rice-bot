@@ -1,6 +1,5 @@
 import GuildSettingsModel, { IConfig } from "./IGuildSettingsController";
 import { Snowflake, Guild } from "discord.js";
-import { Document } from "mongoose";
 import { IGuildSettings } from "./IGuildSettingsController";
 
 /**
@@ -12,57 +11,53 @@ async function doesGuildExist(guildID: Snowflake) {
   return GuildSettingsModel.exists({ id: guildID });
 }
 
-async function getGuild(guildID: Snowflake): Promise<Document | null> {
-  return await GuildSettingsModel.findOne({ id: guildID });
+async function getGuild(g: Guild): Promise<IGuildSettings> {
+  let guild;
+  let data = await GuildSettingsModel.findOne({ id: g.id });
+  if (!data) {
+    guild = await createGuildSettings(g);
+  } else {
+    guild = data;
+  }
+  return <IGuildSettings>(<unknown>guild);
 }
 async function createGuildSettings(
   guild: Guild,
   config?: IConfig
-): Promise<Document | undefined> {
+): Promise<IGuildSettings> {
   let cfg: IConfig = {
     prefix: ["+"],
-    xp: true,
-    nsfw: false,
     logChannel: "ASD",
     EventJoin: false,
-    disabledCommands: [],
+    disabledCommandsPerChannel: new Map<string, string[]>(),
+    disabledCategoriesPerChannel: new Map<string, string[]>(),
+    disabledModulesPerChannel: new Map<string, string[]>(),
+    disabledCategoriesServerWide: new Array<string>(),
+    disabledCommandsServerWide: new Array<string>(),
+    disabledModulesServerWide: new Array<string>(),
+    modules: {
+      nsfw: false,
+      sb: false,
+      xp: true,
+      channels: {
+        shChannel: "",
+      },
+    },
   };
   if (config) cfg = config;
-  GuildSettingsModel.create({
+  let data = await GuildSettingsModel.create({
     id: guild.id,
     owner: guild.ownerID,
     guildCreationDate: guild.createdAt,
     BotJoinDate: guild.joinedAt,
     config: cfg,
-  })
-    .then((data: Document) => {
-      data.save();
-      return data;
-    })
-    .catch((error: Error) => {
-      throw error;
-    });
-  return undefined;
+  });
+  await data.save();
+  return <IGuildSettings>(<unknown>data);
 }
-async function ensureGuild(guild: Guild): Promise<IGuildSettings> {
-  // checks to see if guild exists.
-  if (!(await doesGuildExist(guild.id))) {
-    return await createGuildSettings(guild).then((doc: any) => {
-      const document = <Document>doc;
-      return <IGuildSettings>(<unknown>document);
-    });
-  } else {
-    const g: Document | null = await getGuild(guild.id);
-    if (g === null)
-      return Promise.reject(
-        "this is not supposed to happen?!?!?!?!?!?!?!?!?!?!"
-      );
-    return Promise.resolve(<IGuildSettings>(<unknown>g));
-  }
-}
+
 export default {
   doesGuildExist,
   getGuild,
-  ensureGuild,
   createGuildSettings,
 };

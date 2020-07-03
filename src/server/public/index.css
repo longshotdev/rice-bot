@@ -26,16 +26,18 @@
   background-image: url("/images/asiafield_8k_3840x2160.jpg");
   background-position-y: center;
   /* Add the blur effect */
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
   background-size: auto;
   background-repeat: no-repeat;
-  height: 70vh;
+  height: 110vh;
   transition: filter 2s;
 }
+
 #title {
   height: 115px;
 }
+
 .header-content {
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
@@ -51,35 +53,43 @@
   padding: 20px;
   text-align: center;
 }
+
 h1 {
   font-size: 96px;
   font-family: "Caveat Brush", cursive;
 
   padding: 120px 10px -2px 10px;
 }
+
 .main-content {
   padding-top: 10vh;
 }
+
 .main-content > h2 {
   padding-left: 10vw;
   padding-right: 10vw;
 }
+
 .buttons {
   display: inline;
   min-width: 150px;
   max-width: 10vw;
 }
+
 .buttons > * {
   margin: 30px 0;
 }
+
 .secondary-content {
   padding-bottom: 20vh;
 }
+
 .secondary-img {
   background-image: url("/images/asiafield_8k_3840x2160.jpg");
   background-size: auto;
   height: 70vh;
 }
+
 .booton {
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
@@ -96,6 +106,7 @@ h1 {
   color: white;
   transition: background 250ms ease-in-out, transform 150ms ease;
 }
+
 button:hover,
 button:focus {
   background: #0053ba;
@@ -109,9 +120,11 @@ button:focus {
 button:active {
   transform: scale(0.99);
 }
+
 .alt-white {
   background-color: black;
 }
+
 .btnspan {
   display: inline; /* the default for span */
   padding-right: 100vw;

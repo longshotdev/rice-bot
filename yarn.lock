@@ -3639,12 +3639,13 @@ end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-enmap@^5.2.4:
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.2.4.tgz#a4294299ec6f7b0143aadc09a17f5a8ef84510e1"
-  integrity sha512-YulKPmB3t08i1aBDBDgEew9gAWYWXVuGe8S3DLYRQ+E0FoVxTTzo2iSfcEmUX9DRLuKLDMRLRcbRqX5J0z55Uw==
+enmap@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.3.1.tgz#147d44fc2dd7ded7f0a4c841618f239573be833d"
+  integrity sha512-s/tJwhUWebf7Scip9RyOY0hzOUKfqab3CdcSr+Dkn5Z8qKtIoIsS8hKqWnYvSYZXVBKP2WIzaBWn+0qRXWNYhA==
   dependencies:
     lodash "^4.17.15"
+    on-change "^2.0.1"
 
 enquirer@^2.3.5:
   version "2.3.5"
@@ -6790,6 +6791,11 @@ observable-to-promise@^0.5.0:
   dependencies:
     is-observable "^0.2.0"
     symbol-observable "^1.0.4"
+
+on-change@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/on-change/-/on-change-2.0.1.tgz#bd0c54c7e272f96f2daf084aa30ebe5b4676c7a3"
+  integrity sha512-M/XA/VXeR3ElAlyYBv2Bow0BtNt6qKI8mNmBI+cw+wyjatoZ3tJQPq6RNYWCaV81uKKbm3svROi6TDS3TtWVzQ==
 
 on-finished@~2.3.0:
   version "2.3.0"

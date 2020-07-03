@@ -51,7 +51,7 @@
     "@ava/typescript": "^1.1.1",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
-    "@babel/register": "^7.9.0",
+    "@babel/register": "^7.10.4",
     "@types/express": "^4.17.6",
     "@types/express-session": "^1.17.0",
     "@types/jest": "^25.2.1",

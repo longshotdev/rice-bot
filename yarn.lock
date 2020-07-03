@@ -866,10 +866,10 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-transform-typescript" "^7.9.0"
 
-"@babel/register@^7.9.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.9.0.tgz#02464ede57548bddbb5e9f705d263b7c3f43d48b"
-  integrity sha512-Tv8Zyi2J2VRR8g7pC5gTeIN8Ihultbmk0ocyNz8H2nEZbmhp1N6q0A1UGsQbDvGP/sNinQKUHf3SqXwqjtFv4Q==
+"@babel/register@^7.10.4":
+  version "7.10.4"
+  resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.10.4.tgz#53004ba8b04c4af3cbd84508e03ad150669746e4"
+  integrity sha512-whHmgGiWNVyTVnYTSawtDWhaeYsc+noeU8Rmi+MPnbGhDYmr5QpEDMrQcIA07D2RUv0BlThPcN89XcHCqq/O4g==
   dependencies:
     find-cache-dir "^2.0.0"
     lodash "^4.17.13"
@@ -8309,18 +8309,10 @@ source-map-support@^0.4.15:
   dependencies:
     source-map "^0.5.6"
 
-source-map-support@^0.5.0, source-map-support@^0.5.19:
+source-map-support@^0.5.0, source-map-support@^0.5.16, source-map-support@^0.5.19, source-map-support@^0.5.6:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
   integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
-  dependencies:
-    buffer-from "^1.0.0"
-    source-map "^0.6.0"
-
-source-map-support@^0.5.16, source-map-support@^0.5.6:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.16.tgz#0ae069e7fe3ba7538c64c98515e35339eac5a042"
-  integrity sha512-efyLRJDr68D9hBBNIPWFjhpFzURh+KJykQwvMyW5UiZzYwoF6l4YMMDIJJEyFWxWCqfyxLzz6tSfUFR+kXXsVQ==
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"

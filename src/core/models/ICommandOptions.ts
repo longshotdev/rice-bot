@@ -8,6 +8,9 @@ interface ICommandOptions {
   aliases?: Array<string>;
   permLevel: number;
   description?: string;
+  /**
+   * `<>` Required | `[]` Optional
+   */
   usage: string;
   perms?: Array<PermissionFlags>;
   usageDelimiter?: string;

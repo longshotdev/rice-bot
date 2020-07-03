@@ -19,6 +19,7 @@ class CommandRegistry extends Registry<Command> {
     this.registerModule(Commands.moderation, "Moderation");
     this.registerModule(Commands.system, "System");
     this.registerModule(Commands.music, "Music");
+    this.registerModule(Commands.economy, "Economy");
   }
   public registerModule(module: Object, moduleName: string) {
     for (let [, command] of Object.entries(module)) {

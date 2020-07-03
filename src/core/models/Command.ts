@@ -1,6 +1,5 @@
 import ICommandOptions from "./ICommandOptions";
 import { Message } from "discord.js";
-import Rice from "../../Rice";
 
 class Command {
   public name: String;
@@ -31,11 +30,7 @@ class Command {
     this.usage = usage;
     this.description = description || "Unspecified.";
   }
-  public async run(
-    _client: Rice,
-    _message: Message,
-    ..._args: any
-  ): Promise<Message | void> {}
+  public async run(_message: Message, ..._args: any): Promise<Message | void> {}
   get getRunIn() {
     return this.runIn;
   }

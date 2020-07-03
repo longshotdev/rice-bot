@@ -1,5 +1,4 @@
 import Command from "../../core/models/Command";
-import Rice from "../../Rice";
 import { Message } from "discord.js";
 
 export default class extends Command {
@@ -16,12 +15,9 @@ export default class extends Command {
       aliases: [],
     });
   }
-  public async run(
-    _client: Rice,
-    message: Message,
-    [..._args]
-  ): Promise<Message | void> {
+  public async run(message: Message, [..._args]): Promise<Message | void> {
     let timer = _args[0];
+    console.log(_args);
     message.channel.send("reserved for " + timer + " minutes.");
   }
 }

@@ -10,6 +10,8 @@ class MonitorRegistry extends Registry<Monitor> {
   }
   private init(): void {
     this.registerAll(null, new Monitors.CM());
+    this.registerAll(null, new Monitors.XP());
+    this.registerAll(null, new Monitors.SB());
   }
   get getMonitorStore() {
     let st = super.GetStore;

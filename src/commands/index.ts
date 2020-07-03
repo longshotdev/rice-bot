@@ -5,7 +5,7 @@
 /**
  * Fun Module
  */
-import test from "./Fun/test";
+import test from "./Fun/okay";
 
 /**
  * Moderation Module
@@ -18,12 +18,17 @@ import kick from "./Moderation/kick";
  */
 import help from "./System/help";
 import info from "./System/info";
-
+import config from "./System/config";
+import disable from "./System/disable";
 /**
  * Music Module
  */
 // import play from "./Music/play";
 
+/**
+ * Econ Module
+ */
+import top from "./Economy/top";
 export default {
   fun: {
     test,
@@ -34,6 +39,11 @@ export default {
   system: {
     help,
     info,
+    config,
+    disable,
   },
   music: {},
+  economy: {
+    top,
+  },
 };

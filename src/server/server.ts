@@ -12,6 +12,7 @@ import IDiscordUser from "./api/discord/IDiscordUser";
 import fetch from "node-fetch";
 import IGatewayGuild from "../util/IGatewayGuild";
 import { Permissions } from "discord.js";
+import GuildSettingController from "../api/controller/GuildSettingController";
 const server = express();
 const owners = ["201825529333153792"];
 passport.serializeUser((user, done) => {
@@ -140,6 +141,15 @@ export default () => {
   });
   server.get("/dashboard/:guildID", checkAuthGuild, async (req, res) => {
     renderTemplate(res, req, "guilds/dashboard.ejs", {
+      guild: Rice.getInstance().guilds.cache.get(req.params.guildID),
+      auditLogs: (
+        await Rice.getInstance()
+          .guilds.cache.get(req.params.guildID)!
+          .fetchAuditLogs()
+      ).entries,
+      config: await GuildSettingController.getGuild(
+        Rice.getInstance().guilds.cache.get(req.params.guildID)!
+      ),
       bot: {
         application: await Rice.getInstance().fetchApplication(),
         user: {

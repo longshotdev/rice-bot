@@ -1,6 +1,6 @@
 import Command from "../../core/models/Command";
 import { Message } from "discord.js";
-
+import { GSController } from "../../api";
 export default class extends Command {
   constructor() {
     super({
@@ -15,9 +15,11 @@ export default class extends Command {
       aliases: [],
     });
   }
-  public async run(message: Message, [..._args]): Promise<Message | void> {
-    let timer = _args[0];
-    console.log(_args);
-    message.channel.send("reserved for " + timer + " minutes.");
+  public async run(message: Message): Promise<Message | void> {
+    message.channel.send(
+      `\`\`\`json ${
+        (await GSController.getGuild(message.guild!)).config.modules
+      }\`\`\``
+    );
   }
 }

@@ -61,7 +61,7 @@ const GuildSettingsSchema = new Schema({
       nsfw: { type: Boolean, required: true },
       sb: { type: Boolean, required: true },
       channels: {
-        sbChannel: { type: String, required: false },
+        sbChannel: { type: String, required: true },
       },
     },
     disabledCommandsPerChannel: { type: Map, required: false },

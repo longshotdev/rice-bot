@@ -1,20 +1,46 @@
 import Fragment from "./Fragment";
 import { Cache } from "./Cache";
+import { join, extname, relative, sep } from "path";
+import { scan } from "fs-nextra";
+import { isClass } from "../../util/isClass";
 /**
  * This shit is supposed to store types of shit not fuckign strings you fuckface cum rag.
  */
 export class Store<V extends Fragment> extends Cache<string, V> {
     public holds: FragConstructor<V>;
     public name: string;
+    public directory: string;
 
-    public constructor(name: string, holds: FragConstructor<V>) {
+    public constructor(name: string, holds: FragConstructor<V>, directory: string) {
         super();
         this.holds = holds;
         this.name = name;
+        this.directory = directory;
     }
-
-    public add(v: V) {
-        this.add(v);
+    public async load(directory: string, file: readonly string[]): Promise<V | null> {
+        const location = join(directory, ...file);
+        let piece = null;
+        try {
+            const loaded = (await import("./" + location)) as { default: FragConstructor<V> } | FragConstructor<V>;
+            const fragment = "default" in loaded ? loaded.default : loaded;
+            if (!isClass(fragment)) throw new TypeError("This shit isn't a fucking class idiot");
+            piece = this.add(new fragment(directory, file));
+        } catch (e) {
+            //  Rice.getInstance().emit("WTF", `Failed to load file ${location}. Err: \n${e.stack || e}`);
+            console.log(e);
+        }
+        delete require.cache[location];
+        module.children.pop();
+        return piece;
+    }
+    public async loadAll(): Promise<number> {
+        this.clear();
+        await Store.walk(this, this.directory);
+        return this.size;
+    }
+    public add(v: V): V {
+        super.set(v.name, v);
+        return v;
     }
 
     public remove(v: V | string) {
@@ -34,6 +60,16 @@ export class Store<V extends Fragment> extends Cache<string, V> {
 
     public static get [Symbol.species](): typeof Cache {
         return Cache;
+    }
+    private static async walk<T extends Fragment>(store: Store<T>, directory: string): Promise<T[]> {
+        try {
+            const files = await scan(directory, {
+                filter: (stats: { isFile: () => any; name: string }) => stats.isFile() && extname(stats.name) === ".ts",
+            });
+            return Promise.all([...files.keys()].map((file) => store.load(directory, relative(directory, file).split(sep)) as Promise<T>));
+        } catch {
+            return [];
+        }
     }
 }
 // ????

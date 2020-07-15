@@ -6,16 +6,10 @@ export default class Fragment {
   public name: string;
   public enabled: boolean;
 
-  public constructor(
-    directory: string,
-    file: readonly string[],
-    options: FragmentOptions = {}
-  ) {
+  public constructor(directory: string, file: readonly string[], options: FragmentOptions = {}) {
     this.file = file;
     this.dir = directory;
-    this.name =
-      options.name ??
-      basename(file[file.length - 1], extname(file[file.length - 1]));
+    this.name = options.name ?? basename(file[file.length - 1], extname(file[file.length - 1]));
     this.enabled = options.enabled ?? true;
   }
 
@@ -28,6 +22,12 @@ export default class Fragment {
 }
 
 export interface FragmentOptions {
+  /**
+   * Name of the Fragment
+   */
   name?: string;
+  /**
+   * Fragment Enabled or not.
+   */
   enabled?: boolean;
 }

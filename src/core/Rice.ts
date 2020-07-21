@@ -1,13 +1,14 @@
 import { Client } from "discord.js";
-import { CommandStore } from "./stores";
+import { CommandStore, EventStore } from "./stores";
 
 class Rice extends Client {
     private static instance: Rice;
     public commandStore: CommandStore = new CommandStore("./src/commands");
+    public eventStore: EventStore = new EventStore("./src/events");
 
     private constructor() {
         super({});
-        console.log("boom");
+        console.log("ok");
     }
     static getInstance(): Rice {
         if (!Rice.instance) {

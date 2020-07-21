@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import Fragment from "../Fragment";
+import { CommandStore } from "../../stores";
 
 export class Command extends Fragment {
     public name: string;
@@ -8,8 +9,8 @@ export class Command extends Fragment {
     public requiredPermissions: number;
     public category: string = "General";
 
-    public constructor(options: CommandOptions = {}) {
-        super(__dirname, [...__filename], {
+    public constructor(store: CommandStore, directory: string, files: readonly string[], options: CommandOptions = {}) {
+        super(store, directory, files, {
             name: options.name,
             enabled: true,
         });
@@ -17,6 +18,12 @@ export class Command extends Fragment {
         this.nsfw = options.nsfw as boolean;
         this.cooldown = options.cooldown as number;
         this.requiredPermissions = options.requiredPermissions as number;
+        /**
+         * Inject Category.
+         * Remove the directory from the files
+         *
+         */
+        this.category = files[0] || "No Category";
     }
 }
 export interface CommandOptions {

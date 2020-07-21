@@ -16,15 +16,19 @@ export class Store<V extends Fragment> extends Cache<string, V> {
         this.holds = holds;
         this.name = name;
         this.directory = directory;
+        (async () => {
+            await this.loadAll();
+        })();
     }
     public async load(directory: string, file: readonly string[]): Promise<V | null> {
+        console.log(directory, file);
         const location = join(directory, ...file);
         let piece = null;
         try {
             const loaded = (await import(process.cwd() + "/" + location)) as { default: FragConstructor<V> } | FragConstructor<V>;
             const fragment = "default" in loaded ? loaded.default : loaded;
             if (!isClass(fragment)) throw new TypeError("This shit isn't a fucking class idiot");
-            piece = this.add(new fragment(directory, file));
+            piece = this.add(new fragment(this, directory, file));
         } catch (e) {
             console.log(e);
         }

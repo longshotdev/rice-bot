@@ -1,6 +1,5 @@
 import { Store, FragConstructor } from "../models/Store";
 import { Command } from "../models/discord/Command";
-import { join } from "path";
 
 export class CommandStore extends Store<Command> {
     constructor(dir: string) {
@@ -8,7 +7,7 @@ export class CommandStore extends Store<Command> {
         (async () => {
             await super.loadAll();
             super.forEach((c) => {
-                console.log(join(...c.file));
+                console.log(c.file.join(""));
             });
         })();
     }

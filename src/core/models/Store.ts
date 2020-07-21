@@ -21,12 +21,11 @@ export class Store<V extends Fragment> extends Cache<string, V> {
         const location = join(directory, ...file);
         let piece = null;
         try {
-            const loaded = (await import("./" + location)) as { default: FragConstructor<V> } | FragConstructor<V>;
+            const loaded = (await import(process.cwd() + "/" + location)) as { default: FragConstructor<V> } | FragConstructor<V>;
             const fragment = "default" in loaded ? loaded.default : loaded;
             if (!isClass(fragment)) throw new TypeError("This shit isn't a fucking class idiot");
             piece = this.add(new fragment(directory, file));
         } catch (e) {
-            //  Rice.getInstance().emit("WTF", `Failed to load file ${location}. Err: \n${e.stack || e}`);
             console.log(e);
         }
         delete require.cache[location];

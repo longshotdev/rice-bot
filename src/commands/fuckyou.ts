@@ -3,6 +3,7 @@ export default class bonk extends Command {
     constructor() {
         super({
             name: "fuckyou",
+            cooldown: 3,
         });
     }
 }

@@ -6,6 +6,7 @@ export class Command extends Fragment {
     public name: string;
     public nsfw: boolean;
     public cooldown: number;
+    public description: string = "No Description";
     public requiredPermissions: number;
     public category: string = "General";
 
@@ -18,6 +19,7 @@ export class Command extends Fragment {
         this.nsfw = options.nsfw as boolean;
         this.cooldown = options.cooldown as number;
         this.requiredPermissions = options.requiredPermissions as number;
+        this.description = (options.description as string) ?? "No description.";
         /**
          * Inject Category.
          * Remove the directory from the files
@@ -30,6 +32,7 @@ export interface CommandOptions {
     cooldown?: number;
     nsfw?: boolean;
     name?: string;
+    description?: string;
     requiredPermissions?: number;
 }
 export interface Command {

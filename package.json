@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "@discordjs/opus": "^0.2.1",
+        "ascii-table": "^0.0.9",
         "ava": "^3.8.2",
         "ava-ts": "^0.25.2",
         "cachegoose": "^8.0.0",

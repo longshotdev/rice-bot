@@ -2,7 +2,8 @@
     "name": "ricebot",
     "version": "1.0.0",
     "main": "./src/index.js",
-    "license": "MIT",
+    "license": "MPL-2.0",
+    "repository": "https://github.com/longshotdev/rice-deployment.git",
     "private": true,
     "scripts": {
         "tasks": "node cli/display.js",

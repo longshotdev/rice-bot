@@ -9,6 +9,7 @@ export class Command extends Fragment {
     public description: string = "No Description";
     public requiredPermissions: number;
     public category: string = "General";
+    public restricted: boolean;
 
     public constructor(store: CommandStore, directory: string, files: readonly string[], options: CommandOptions = {}) {
         super(store, directory, files, {
@@ -20,6 +21,7 @@ export class Command extends Fragment {
         this.cooldown = options.cooldown as number;
         this.requiredPermissions = options.requiredPermissions as number;
         this.description = (options.description as string) ?? "No description.";
+        this.restricted = options.restricted as boolean;
         /**
          * Inject Category.
          * Remove the directory from the files
@@ -34,6 +36,7 @@ export interface CommandOptions {
     name?: string;
     description?: string;
     requiredPermissions?: number;
+    restricted?: boolean | true;
 }
 export interface Command {
     run?(message: Message, params: any[]): Promise<Message>;

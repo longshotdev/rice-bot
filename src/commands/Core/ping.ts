@@ -8,6 +8,7 @@ export default class bonk extends Command {
     constructor(store: CommandStore, directory: string, files: readonly string[]) {
         super(store, directory, files, {
             name: "ping",
+            description: "Ping pong.",
             cooldown: 3,
         });
     }

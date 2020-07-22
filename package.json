@@ -2,7 +2,8 @@
     "name": "ricebot",
     "version": "1.0.0",
     "main": "./src/index.js",
-    "license": "MIT",
+    "license": "MPL-2.0",
+    "repository": "https://github.com/longshotdev/rice-deployment.git",
     "private": true,
     "scripts": {
         "tasks": "node cli/display.js",
@@ -16,6 +17,7 @@
     },
     "dependencies": {
         "@discordjs/opus": "^0.2.1",
+        "ascii-table": "^0.0.9",
         "ava": "^3.8.2",
         "ava-ts": "^0.25.2",
         "cachegoose": "^8.0.0",

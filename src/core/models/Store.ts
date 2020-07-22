@@ -1,48 +1,79 @@
-import { Collection } from "discord.js";
-
+import Fragment from "./Fragment";
+import { Cache } from "./Cache";
+import { join, extname, relative, sep } from "path";
+import { scan } from "fs-nextra";
+import { isClass } from "../../util/isClass";
 /**
- * @class Simple Key Value Store that RB uses.
- * @extends Discord.Collection
+ * This shit is supposed to store types of shit not fuckign strings you fuckface cum rag.
  */
-interface KV {
-  key: any;
-  value: any;
-}
-class Store<Key, Value> {
-  protected store = new Collection<Key, Value>();
+export class Store<V extends Fragment> extends Cache<string, V> {
+    public holds: FragConstructor<V>;
+    public name: string;
+    public directory: string;
 
-  public set(key: Key, value: Value): Collection<Key, Value> {
-    this.store.set(key, value);
-    return this.store;
-  }
-  public delete(key: Key): Collection<Key, Value> {
-    this.store.delete(key);
-    return this.store;
-  }
-  public get(key: Key): Value | undefined {
-    // if (this.store.get(key) === undefined)
-    //   throw new Error(`${key} is not found in store.`);
-    return this.store.get(key);
-  }
-  public exist(key: Key): boolean {
-    if (this.store.get(key) === undefined) return false;
-    return true;
-  }
-  public getMany(...key: Key[]): KV[] {
-    let tempKV: KV[] = [];
-    for (var i = 0; i < key.length; i++) {
-      tempKV.push({
-        key: key[i],
-        value: this.store.get(key[i]),
-      });
+    public constructor(name: string, holds: FragConstructor<V>, directory: string) {
+        super();
+        this.holds = holds;
+        this.name = name;
+        this.directory = directory;
+        (async () => {
+            await this.loadAll();
+        })();
     }
-    return tempKV;
-  }
-  get getStore(): Collection<Key, Value> {
-    return this.store;
-  }
-  get size(): number {
-    return this.store.size;
-  }
+    public async load(directory: string, file: readonly string[]): Promise<V | null> {
+        console.log(directory, file);
+        const location = join(directory, ...file);
+        let piece = null;
+        try {
+            const loaded = (await import(process.cwd() + "/" + location)) as { default: FragConstructor<V> } | FragConstructor<V>;
+            const fragment = "default" in loaded ? loaded.default : loaded;
+            if (!isClass(fragment)) throw new TypeError("This shit isn't a fucking class idiot");
+            piece = this.add(new fragment(this, directory, file));
+        } catch (e) {
+            console.log(e);
+        }
+        delete require.cache[location];
+        module.children.pop();
+        return piece;
+    }
+    public async loadAll(): Promise<number> {
+        this.clear();
+        await Store.walk(this, this.directory);
+        return this.size;
+    }
+    public add(v: V): V {
+        super.set(v.name, v);
+        return v;
+    }
+
+    public remove(v: V | string) {
+        const fat = this.resolve(v);
+        if (!fat) return;
+        super.delete(fat.name);
+    }
+
+    public resolve(name: V | string): V | null {
+        if (name instanceof this.holds) return name;
+        return this.get(name as string) || null;
+    }
+
+    get size(): number {
+        return super.size;
+    }
+
+    public static get [Symbol.species](): typeof Cache {
+        return Cache;
+    }
+    private static async walk<T extends Fragment>(store: Store<T>, directory: string): Promise<T[]> {
+        try {
+            const files = await scan(directory, {
+                filter: (stats: { isFile: () => any; name: string }) => stats.isFile() && extname(stats.name) === ".ts",
+            });
+            return Promise.all([...files.keys()].map((file) => store.load(directory, relative(directory, file).split(sep)) as Promise<T>));
+        } catch {
+            return [];
+        }
+    }
 }
-export default Store;
+// ????
+export type FragConstructor<T> = new (...args: ConstructorParameters<typeof Fragment>) => T;

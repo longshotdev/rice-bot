@@ -1,8 +1,4 @@
 import test from "ava";
-import { Store } from "../../src/core/models/Store";
-import Fragment from "../../src/core/models/Fragment";
-
-class OKAY extends Fragment {}
 test("create store", (t) => {
     t.pass();
 });

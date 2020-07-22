@@ -1,0 +1,53 @@
+<%- include('pieces/header', {bot, user, path}) %>
+<link rel="stylesheet" href="/dashboard.css" />
+<div class="container">
+  <h1 align="center">Select a Server.</h1>
+  <div class="container">
+    <% if ({ guilds }) { %> <% guilds.map(g => { %> <% if(g.canAdd === 1) {%>
+    <div id="<%= g.id %>" onClick="runToGuild('<%= g.id%>')" class="guild-item">
+      <% } else if(g.canAdd === 2) {%>
+      <div
+        id="<%= g.id %>"
+        onClick="addToGuild('<%= g.id%>')"
+        class="guild-item"
+      >
+        <% } %>
+        <span class="guild-item-span">
+          <% if(g.icon) {%>
+          <img
+            class="guild-item-icon"
+            src="https://cdn.discordapp.com/icons/<%= g.id %>/<%= g.icon %>.png?size=64"
+          />
+          <% } else { %>
+          <div class="guild-item-icon-div">
+            <%= g.name.split(' ').map(v => v[0]).join('') %>
+          </div>
+          <% } %>
+          <p class="guild-item-title"><%= g.name %></p>
+          <% if(g.canAdd === 1) {%>
+          <button type="button" class="guild-item-button btn btn-success">
+            Go to Server
+          </button>
+          <% } else if(g.canAdd === 2) {%>
+          <button type="button" class="guild-item-button btn btn-secondary">
+            Add to Server
+          </button>
+          <% } %>
+        </span>
+      </div>
+      <% })%> <% } %>
+    </div>
+  </div>
+  <script>
+    function addToGuild(id) {
+      // https://discord.com/oauth2/authorize?scope=bot&response_type=code&redirect_uri=https%3A%2F%2Fmee6.xyz%2Fguild-oauth&permissions=1916267615&client_id=159985415099514880&guild_id=703427784692727919
+      window.location.href = `https://discord.com/api/oauth2/authorize?client_id=<%= bot.application.id %>&permissions=8&redirect_uri=${encodeURIComponent(
+        "http://localhost:8081/authenticate-guild"
+      )}&scope=bot&guild_id=${id}`;
+    }
+    function runToGuild(id) {
+      window.location.href = window.location.href + `/${id}`;
+    }
+  </script>
+</div>
+<%- include('pieces/footer', {bot, user, path}) %>

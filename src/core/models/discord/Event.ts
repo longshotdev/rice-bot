@@ -17,5 +17,5 @@ export interface EventOptions {
     name?: string;
 }
 export interface Event {
-    run?(params: any[]): Promise<void>;
+    run?([...params]: any): Promise<void>;
 }

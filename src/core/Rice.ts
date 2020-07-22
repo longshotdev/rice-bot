@@ -1,10 +1,11 @@
 import { Client } from "discord.js";
-import { CommandStore, EventStore } from "./stores";
+import { CommandStore, EventStore, MonitorStore } from "./stores";
 
 class Rice extends Client {
     private static instance: Rice;
     public commandStore: CommandStore = new CommandStore("./src/commands");
     public eventStore: EventStore = new EventStore("./src/events");
+    public monitorStore: MonitorStore = new MonitorStore("./src/monitors");
 
     private constructor() {
         super({});

@@ -24,7 +24,6 @@ export class Command extends Fragment {
          *
          */
         this.category = files[0] || "No Category";
-        console.log(this.category);
     }
 }
 export interface CommandOptions {

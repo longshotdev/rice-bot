@@ -6,7 +6,7 @@ export default class Ready extends Event implements Event {
             name: "ready",
         });
     }
-    public async run(_params: any[]): Promise<void> {
+    public async run(): Promise<void> {
         console.log("ready k.");
     }
 }

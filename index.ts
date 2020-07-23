@@ -9,7 +9,7 @@ switch (process.env.NODE_ENV) {
         break;
     case "production":
         // choke on my cum you pile of shit
-        process.chdir(process.env.NODE_PATH);
+        process.chdir(process.env.NODE_PATH!);
         path = `${__dirname}/.env.production`;
         break;
     default:

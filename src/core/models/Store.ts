@@ -21,10 +21,10 @@ export class Store<V extends Fragment> extends Cache<string, V> {
         })();
     }
     public async load(directory: string, file: readonly string[]): Promise<V | null> {
-        console.log(directory, file);
         const location = join(directory, ...file);
         let piece = null;
         try {
+            console.log(process.cwd() + "/" + location);
             const loaded = (await import(process.cwd() + "/" + location)) as { default: FragConstructor<V> } | FragConstructor<V>;
             const fragment = "default" in loaded ? loaded.default : loaded;
             if (!isClass(fragment)) throw new TypeError("This shit isn't a fucking class idiot");
@@ -65,9 +65,11 @@ export class Store<V extends Fragment> extends Cache<string, V> {
         return Cache;
     }
     private static async walk<T extends Fragment>(store: Store<T>, directory: string): Promise<T[]> {
+        console.log(directory);
         try {
             const files = await scan(directory, {
-                filter: (stats: { isFile: () => any; name: string }) => stats.isFile() && extname(stats.name) === ".ts",
+                filter: (stats: { isFile: () => any; name: string }) =>
+                    (stats.isFile() && extname(stats.name) === ".ts") || (stats.isFile() && extname(stats.name) === ".js"),
             });
             return Promise.all([...files.keys()].map((file) => store.load(directory, relative(directory, file).split(sep)) as Promise<T>));
         } catch {

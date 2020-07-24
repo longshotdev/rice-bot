@@ -10,7 +10,7 @@ export default class ExperienceMonitor extends Monitor implements Monitor {
         });
     }
     public async run(): Promise<Message | void> {
-        console.log("MONITOR NOT IMPLEMENTED.");
+        console.log("Experience MONITOR NOT IMPLEMENTED.");
         return;
     }
 }

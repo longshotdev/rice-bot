@@ -2,7 +2,7 @@ import { Monitor } from "../core/models/Monitor";
 import { MonitorStore } from "../core/stores/MonitorStore";
 import { Message, MessageReaction, User, Snowflake, TextChannel, MessageEmbed } from "discord.js";
 export default class StarboardMonitor extends Monitor implements Monitor {
-    private channel: Snowflake = "736031066615316541";
+    private channel: Snowflake = "736046059276468275";
     private cooldown: Set<Snowflake> = new Set<Snowflake>();
     constructor(store: MonitorStore, dir: string, files: readonly string[]) {
         super(store, dir, files, {

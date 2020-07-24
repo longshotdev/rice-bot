@@ -1,9 +1,9 @@
 import { Monitor } from "../core/models/Monitor";
 import { MonitorStore } from "../core/stores/MonitorStore";
-import { Message } from "discord.js";
+import { Message, Snowflake } from "discord.js";
 import Rice from "../core/Rice";
 export default class CommandMonitor extends Monitor implements Monitor {
-    private cooldowns = new Set();
+    private cooldowns = new Set<Snowflake>();
     constructor(store: MonitorStore, dir: string, files: readonly string[]) {
         super(store, dir, files, {
             name: "Command",
@@ -23,7 +23,10 @@ export default class CommandMonitor extends Monitor implements Monitor {
         if (!commandRunnable) return;
         if (commandRunnable.restricted && message.author.id != "201825529333153792") return; // TODO: Fix this shit later.
         if (commandRunnable.cooldown) {
-            if (this.cooldowns.has(message.author.id)) return message.channel.send("You are on cooldown.");
+            if (this.cooldowns.has(message.author.id)) {
+                await message.react("⌚");
+                return;
+            }
             commandRunnable.run!(message, args!);
             this.cooldowns.add(message.author.id);
             setTimeout(() => this.cooldowns.delete(message.author.id), commandRunnable.cooldown * 1000);

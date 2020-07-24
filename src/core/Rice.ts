@@ -9,7 +9,6 @@ class Rice extends Client {
 
     private constructor() {
         super({});
-        console.log("ok");
     }
     static getInstance(): Rice {
         if (!Rice.instance) {

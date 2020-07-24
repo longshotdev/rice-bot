@@ -14,7 +14,24 @@ export default class extends Command {
     }
     public async run(message: Message): Promise<Message> {
         const help: any = await this.buildHelp(Rice.getInstance());
-        return message.channel.send(`\`\`\`fix\n${help.toString()}\`\`\``);
+        let text: string = help.toString();
+        if (text.length > 2000) {
+            let splitted = text.match(/([^\n]{1,1990})/g);
+            let textBlock = "";
+            for (let index = 0; index < splitted!.length; ) {
+                let bonk = textBlock.concat(splitted![index]).concat("\n");
+                if (!(bonk.length >= 2000)) {
+                    textBlock = bonk;
+                    index++;
+                } else {
+                    await message.channel.send(`\`\`\`fix\n${textBlock}\`\`\``);
+                    textBlock = "";
+                    index--;
+                }
+            }
+            if (textBlock) await message.channel.send(`\`\`\`fix\n${textBlock}\`\`\``);
+            return message; // HACK: just return the parent message
+        } else return message.channel.send(`\`\`\`fix\n${text}\`\`\``);
     }
     private async buildHelp(client: Rice) {
         const table = new ascii();

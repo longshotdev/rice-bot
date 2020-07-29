@@ -27,7 +27,7 @@ export class Store<V extends Fragment> extends Cache<string, V> {
         try {
             const loaded = (await import(process.cwd() + "/" + location)) as { default: FragConstructor<V> } | FragConstructor<V>;
             const fragment = "default" in loaded ? loaded.default : loaded;
-            if (!isClass(fragment)) throw new TypeError("This shit isn't a fucking class idiot");
+            if (!isClass(fragment)) throw new TypeError(`This shit isn't a fucking class idiot: ${file}`);
             piece = this.add(new fragment(this, directory, file));
         } catch (e) {
             console.log(e);

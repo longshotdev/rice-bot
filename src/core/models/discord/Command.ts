@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import Fragment from "../Fragment";
+import { Fragment } from "../Fragment";
 import { CommandStore } from "../../stores";
 
 export class Command extends Fragment {

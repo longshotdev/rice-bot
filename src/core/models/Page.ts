@@ -18,7 +18,7 @@ interface IPage {
     author?: MessageEmbedAuthor;
     provider?: MessageEmbedProvider;
 }
-class Page {
+export class Page {
     // HACK: I mean, is this really a hack? All fields are optional
     public title?: string;
     public description?: string;
@@ -50,5 +50,3 @@ class Page {
         this.fields?.push(field);
     }
 }
-
-export default Page;

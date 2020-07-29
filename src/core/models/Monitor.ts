@@ -1,4 +1,4 @@
-import Fragment from "./Fragment";
+import { Fragment } from "./Fragment";
 import { MonitorStore } from "../stores";
 import { Message } from "discord.js";
 export class Monitor extends Fragment implements Monitor {

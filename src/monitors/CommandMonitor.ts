@@ -2,6 +2,7 @@ import { Monitor } from "../core/models/Monitor";
 import { MonitorStore } from "../core/stores/MonitorStore";
 import { Message, Snowflake } from "discord.js";
 import Rice from "../core/Rice";
+import { RiceMessage } from "../core/models";
 export default class CommandMonitor extends Monitor implements Monitor {
     private cooldowns = new Set<Snowflake>();
     constructor(store: MonitorStore, dir: string, files: readonly string[]) {
@@ -11,8 +12,8 @@ export default class CommandMonitor extends Monitor implements Monitor {
             ignoreSelf: true,
         });
     }
-    public async run(message: Message): Promise<Message | void> {
-        let prefix = "^";
+    public async run(message: RiceMessage): Promise<Message | void> {
+        let prefix = <string>message.settings.prefix[0];
         if (message.mentions.has(Rice.getInstance().user!)) {
             return message.reply(`My prefix is \`${prefix}\``);
         }
@@ -30,6 +31,6 @@ export default class CommandMonitor extends Monitor implements Monitor {
             commandRunnable.run!(message, args!);
             this.cooldowns.add(message.author.id);
             setTimeout(() => this.cooldowns.delete(message.author.id), commandRunnable.cooldown * 1000);
-        } else commandRunnable.run!(message, args!);
+        } else commandRunnable.run!(<RiceMessage>message, args!);
     }
 }

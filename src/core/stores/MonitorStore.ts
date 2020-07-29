@@ -1,13 +1,12 @@
 import { Store, FragConstructor } from "../models/Store";
-import { Message } from "discord.js";
 import Rice from "../Rice";
-import { Monitor } from "../models/Monitor";
+import { Monitor, RiceMessage } from "../models";
 
 export class MonitorStore extends Store<Monitor> {
     constructor(dir: string) {
         super("Monitors", Monitor as FragConstructor<Monitor>, dir);
     }
-    public runMonitors(msg: Message) {
+    public runMonitors(msg: RiceMessage) {
         for (const monit of super.values()) {
             if (
                 !monit.listensFor &&

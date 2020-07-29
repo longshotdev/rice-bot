@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import { Command } from "../../core/models/discord/Command";
 import { CommandStore } from "../../core/stores";
 import client from "../../core/Rice";
-import Page from "../../core/models/Page";
+import { Page } from "../../core/models";
 import PageEmbed from "../../core/tools/PageEmbed";
 import Discord from "discord.js";
 export default class bonk extends Command {

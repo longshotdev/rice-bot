@@ -1,7 +1,7 @@
 import { join, basename, extname } from "path";
 import { Store } from "./Store";
 
-export default class Fragment {
+export class Fragment {
     public readonly file: readonly string[];
     public readonly dir: string;
     public name: string;

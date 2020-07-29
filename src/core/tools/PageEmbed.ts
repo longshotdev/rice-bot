@@ -1,4 +1,4 @@
-import Page from "../models/Page";
+import { Page } from "../models/Page";
 import Rice from "../Rice";
 import { Message, MessageEmbed, MessageReaction, User } from "discord.js";
 

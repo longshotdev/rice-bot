@@ -1,4 +1,4 @@
-import Fragment from "../Fragment";
+import { Fragment } from "../Fragment";
 import Rice from "../../Rice";
 import { EventStore } from "../../stores";
 export class Event extends Fragment implements Event {

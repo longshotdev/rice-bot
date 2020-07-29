@@ -14,14 +14,14 @@ export default class bonk extends Command {
         });
     }
     public async run(message: Message, args: any): Promise<Message> {
-        let msg = await message.channel.send(`${Emojis.GIF_PARROT} Pinging... ${Emojis.GIF_PARROT}`);
+        let msg = await message.channel.send(`${Emojis.GIF_PARROT} Fetching... ${Emojis.GIF_PARROT}`);
         // https://api.github.com/repos/longshotdev/rice-bot/commits
         const data = await fetch(`https://api.github.com/repos/longshotdev/rice-bot/commits?sha=${<string>args[0] || "master"}&per_page=10`, {
             headers: { "User-Agent": "Rice-Bot/V1" },
         });
         let target = await data.json();
         if (!data.ok) {
-            return message.channel.send(`Branch \`${<string>args[0]}\` not found.`);
+            return msg.edit(`Branch \`${<string>args[0]}\` not found.`);
         } else {
             const embed = new MessageEmbed()
                 .setTitle(`[Rice-Bot:${<string>args[0] || "master"} Latest Commits]`)
